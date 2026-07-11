@@ -1,4 +1,23 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kognit — Welcher KI-Arbeitstyp bist du?</title>
+<meta name="description" content="Kostenloser KI-Arbeitstyp-Test: 24 Fragen, 16 Archetypen. Finde heraus, wie du mit KI am besten arbeitest — inklusive Prompt-Report für deinen Beruf.">
+<link rel="canonical" href="https://arbeitstyp.de/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Kognit">
+<meta property="og:locale" content="de_DE">
+<meta property="og:url" content="https://arbeitstyp.de/">
+<meta property="og:title" content="Welcher KI-Arbeitstyp bist du?">
+<meta property="og:description" content="Kostenloser Test: 24 Fragen, 16 Archetypen. Entdecke dein KI-Betriebssystem — mit maßgeschneidertem Prompt-Report für deinen Beruf.">
+<meta property="og:image" content="https://arbeitstyp.de/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kognit — KI-Arbeitstyp-Test">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%234C48D1'/%3E%3Ctext%20x='16'%20y='23'%20font-size='20'%20font-family='Georgia,serif'%20font-weight='700'%20text-anchor='middle'%20fill='white'%3EK%3C/text%3E%3C/svg%3E">
 <style>
 /* ============================================================
    KOGNIT — design tokens
@@ -348,6 +367,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .sharebox p{color:var(--ink-2);font-size:15.5px;margin:0 0 22px}
 .share-actions{display:flex;flex-wrap:wrap;gap:12px}
 
+/* legal footer links */
+footer a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 /* unlock CTA band */
 .unlockband{margin-top:clamp(40px,6vw,72px);text-align:center;padding:clamp(30px,5vw,52px) var(--sp);
   border:1px solid color-mix(in srgb,var(--accent) 34%,var(--border));border-radius:var(--r-xl);
@@ -496,6 +517,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
   @page{margin:16mm}
 }
 </style>
+</head>
+<body>
 
 <!-- ==================================================================== -->
 <div class="topbar">
@@ -639,7 +662,7 @@ const state = {
 const store = (()=>{
   let ok=true; try{ const k="__kg";localStorage.setItem(k,"1");localStorage.removeItem(k); }catch(e){ ok=false; }
   const mem={};
-  return {
+  return { ok,
     get(k){ try{ return ok?localStorage.getItem(k):mem[k]; }catch(e){ return mem[k]; } },
     set(k,v){ try{ ok?localStorage.setItem(k,v):(mem[k]=v); }catch(e){ mem[k]=v; } }
   };
@@ -866,8 +889,8 @@ function viewLanding(){
     <div class="wrap">
       <div class="section-head">
         <div class="eyebrow">Warum Kognit</div>
-        <h2>Kein BuzzFeed-Test. Ein Mess-Instrument.</h2>
-        <p>Die Typologie beruht auf einem psychometrischen Modell aus vier Verhaltensachsen dazu, wie Wissensarbeiter mit generativer KI arbeiten. Auf Trennschärfe gebaut, nicht auf Klicks optimiert.</p>
+        <h2>Kein BuzzFeed-Test. Durchdacht, nicht zusammengeklickt.</h2>
+        <p>Die Typologie beruht auf einem psychologischen Modell aus vier Verhaltensachsen dazu, wie Wissensarbeiter mit generativer KI arbeiten. Mit gemischt gepolten Fragen gegen Ja-Sager-Muster gebaut, nicht auf Klicks optimiert.</p>
       </div>
       <div class="props">
         <div class="prop"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 8h14M6 21h12"/></svg><div class="k">Fundament</div><h3>Methodisch, kein Clickbait</h3><p>Vier klar definierte Verhaltensachsen statt Bauchgefühl. Seriöse Sprache statt Hype.</p></div>
@@ -911,7 +934,7 @@ function viewLanding(){
         </div>
         <div class="tier feature">
           <div class="name">Dein KI-Betriebssystem</div>
-          <div class="price">14 €<span class="strike">19 €</span></div>
+          <div class="price">14 €</div>
           <div style="color:var(--ink-3);font-size:14px">Einmalig · gehört dir für immer</div>
           <ul>
             <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Alles aus dem Test</li>
@@ -925,7 +948,7 @@ function viewLanding(){
         <div class="tier">
           <div class="name">Immer aktuell</div>
           <div class="price">29 €<small> /Jahr</small></div>
-          <div style="color:var(--ink-3);font-size:14px">Optional · gegen das Veralten</div>
+          <div style="color:var(--ink-3);font-size:14px">Geplant · noch nicht buchbar</div>
           <ul>
             <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Alles aus dem Betriebssystem</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Quartalsweise aktualisierte Prompt-Packs</li>
@@ -934,6 +957,7 @@ function viewLanding(){
           <button class="btn btn-ghost btn-block" onclick="startTest()">Erst testen</button>
         </div>
       </div>
+      <div style="text-align:center;color:var(--ink-3);font-size:13px;margin-top:16px">Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.</div>
     </div>
   </section>
 
@@ -954,8 +978,9 @@ function viewLanding(){
 
   <footer>
     <div class="wrap">
-      <div>© Kognit · Der KI-Arbeitstyp-Test · Ein psychometrisches Modell für die Arbeit mit KI</div>
+      <div>© Kognit · Der KI-Arbeitstyp-Test · Ein psychologisches Modell für die Arbeit mit KI</div>
       <div>Keine Anmeldung · Kein Datenverkauf · Läuft im Browser</div>
+      <div style="margin-top:12px"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="widerruf.html">Widerruf</a> · <a href="mailto:kontakt@arbeitstyp.de">kontakt@arbeitstyp.de</a></div>
     </div>
   </footer>`;
 }
@@ -1159,8 +1184,9 @@ function viewPaywall(){
 
         <div class="buybox">
           <div class="eyebrow" style="color:var(--accent)">Einmalzahlung</div>
-          <div class="price-row"><span class="price">14 €</span><span class="old">19 €</span></div>
+          <div class="price-row"><span class="price">14 €</span></div>
           <div class="once">Gehört dir für immer · keine Anmeldung</div>
+          <div style="color:var(--ink-3);font-size:12px;margin-top:4px">Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.</div>
           <ul class="incl">
             <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Prompt-Bibliothek: ${((a.promptLibrary||[]).length)||14} Prompts für ${a.name}</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Delegations-Landkarte: abgeben vs. behalten</li>
@@ -1168,18 +1194,21 @@ function viewPaywall(){
             <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Anti-Patterns + konkrete Gegenzüge</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>PDF-Export deines Betriebssystems</li>
           </ul>
+          <label style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-2);text-align:left;line-height:1.5;margin:0 0 14px;border-radius:8px">
+            <input type="checkbox" id="widerrufOk" style="margin-top:3px;flex:none">
+            <span>Ich stimme ausdrücklich zu, dass der Report sofort — vor Ablauf der 14-tägigen Widerrufsfrist — bereitgestellt wird. Mir ist bekannt, dass ich dadurch mein Widerrufsrecht verliere. Details: <a href="widerruf.html" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Widerrufsbelehrung</a>.</span>
+          </label>
           <button class="btn btn-accent btn-block btn-lg" onclick="checkout()">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 2l1 4M6 6h14l-2 9H8z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
             Jetzt freischalten — 14 €</button>
-          <div class="ls-note"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 2l8 4v6c0 5-4 8-8 10-4-2-8-5-8-10V6z"/></svg><span>Sicherer Checkout über Stripe (Karte, Apple Pay, Google Pay, Klarna u. a.). Nach der Zahlung kommst du automatisch hierher zurück — dein Report öffnet sich von selbst.</span></div>
+          <div class="ls-note"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 2l8 4v6c0 5-4 8-8 10-4-2-8-5-8-10V6z"/></svg><span>Sicherer Checkout über Stripe (Karte, Apple Pay, Google Pay, Klarna u. a.). Nach der Zahlung kommst du automatisch hierher zurück — dein Report öffnet sich von selbst. Klappt das mal nicht (Tab geschlossen, anderes Gerät)? Schreib an <a href="mailto:kontakt@arbeitstyp.de" style="color:inherit;text-decoration:underline">kontakt@arbeitstyp.de</a> mit deiner Stripe-Bestellnummer — du wirst manuell freigeschaltet.</span></div>
 
           <div class="divider-or">oder · code einlösen</div>
           <div class="keyfield">
-            <input id="licenseKey" placeholder="KOGNIT-XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false">
+            <input id="licenseKey" placeholder="Aktions- oder Support-Code" autocomplete="off" spellcheck="false">
             <button class="btn btn-ghost" onclick="redeemKey()">Einlösen</button>
           </div>
           <div class="keymsg" id="keyMsg"></div>
-          <div class="demohint">Zum Ausprobieren dieser Vorschau: Schlüssel <code>KOGNIT-DEMO</code> schaltet den vollen Report frei.</div>
         </div>
       </div>
       <div style="margin-top:28px"><button class="ghostlink" onclick="go('reveal')" style="font-size:14px">← Zurück zum Ergebnis</button></div>
@@ -1259,7 +1288,7 @@ function viewReport(){
       </div>
 
       <div class="report-foot">
-        <p>Kognit · ${a.name} (${a.code}) · Ein psychometrisches Modell für die Arbeit mit generativer KI.</p>
+        <p>Kognit · ${a.name} (${a.code}) · Ein psychologisches Modell für die Arbeit mit generativer KI.</p>
         <div style="margin-top:16px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
           <button class="btn btn-ghost" onclick="window.print()">PDF-Export</button>
           <button class="btn btn-ghost" onclick="downloadBadge()">Badge herunterladen</button>
@@ -1318,6 +1347,13 @@ function finishTest(){
   go("reveal");
 }
 function checkout(){
+  const cb=document.getElementById("widerrufOk");
+  if(cb && !cb.checked){
+    toast("Bitte bestätige zuerst die Einwilligung zur sofortigen Bereitstellung.");
+    const l=cb.closest("label"); if(l){ l.style.outline="2px solid var(--accent)"; l.style.outlineOffset="4px"; }
+    cb.focus();
+    return;
+  }
   // Stripe Payment Link; leitet nach der Zahlung zurück auf /?paid=1
   window.location.href="https://buy.stripe.com/5kQaEQbIIbfJbaobAG6wE00";
 }
@@ -1332,7 +1368,7 @@ function redeemKey(){
     msg.className="keymsg ok"; msg.textContent="Freigeschaltet! Dein Betriebssystem öffnet sich …";
     setTimeout(()=>go("report"),700);
   }else{
-    msg.className="keymsg err"; msg.textContent="Dieser Schlüssel passt nicht. Format: KOGNIT-XXXX-XXXX-XXXX";
+    msg.className="keymsg err"; msg.textContent="Dieser Code passt nicht — prüfe Tippfehler oder schreib an kontakt@arbeitstyp.de.";
     inp.focus();
   }
 }
@@ -1557,11 +1593,11 @@ const ROLE_ICONS={
   andere:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>'
 };
 const FAQ=[
-  {q:"Ist das nur ein weiterer BuzzFeed-Test?",a:"Nein. Dahinter steckt ein psychometrisches Modell aus vier Verhaltensachsen dazu, wie Wissensarbeiter mit generativer KI arbeiten. Die Fragen sind gemischt gepolt und auf Trennschärfe gebaut, nicht auf Klicks optimiert."},
+  {q:"Ist das nur ein weiterer BuzzFeed-Test?",a:"Nein. Dahinter steckt ein psychologisches Modell aus vier Verhaltensachsen dazu, wie Wissensarbeiter mit generativer KI arbeiten. Die Fragen sind gemischt gepolt gegen Ja-Sager-Muster gebaut, nicht auf Klicks optimiert."},
   {q:"Warum zahlen, wenn ChatGPT auch Prompts gibt?",a:"Weil hier kuratiert, getestet und auf deinen psychologischen Typ UND Beruf zugeschnitten ist — inklusive Delegations-Landkarte, Anti-Patterns und Rollen-Benchmark. Das spart Stunden Selbst-Zusammenbauen."},
   {q:"Muss ich mich anmelden oder Daten hergeben?",a:"Nein. Der Test läuft komplett im Browser, ohne Anmeldung und ohne Datenverkauf. Den Report bekommst du über einen sicheren Stripe-Checkout — direkt nach der Zahlung wird er in deinem Browser freigeschaltet."},
   {q:"Für wen ist das gemacht?",a:"Für Wissensarbeiter, die KI schon täglich nutzen: Berater, PMs, Marketer, Entwickler, Anwält:innen, Lehrende, Gründer:innen. Zum Start gibt es sechs Rollen mit maßgeschneiderten Inhalten."},
-  {q:"Was, wenn sich die KI-Tools ändern?",a:"Dafür gibt es das optionale Update-Abo (29 €/Jahr) mit quartalsweise aktualisierten Prompt-Packs. Der Einmal-Report gehört dir trotzdem für immer."}
+  {q:"Was, wenn sich die KI-Tools ändern?",a:"Dafür ist ein optionales Update-Abo (29 €/Jahr) mit quartalsweise aktualisierten Prompt-Packs geplant — es ist noch nicht buchbar. Der Einmal-Report gehört dir in jedem Fall für immer."}
 ];
 
 /* ---- boot (after all data + functions are defined) ---- */
@@ -1570,17 +1606,26 @@ const FAQ=[
   if(!state.result){
     try{
       const saved=store.get("kognit_result");
-      if(saved){ state.result=JSON.parse(saved); state.role=store.get("kognit_role")||state.role; }
+      if(saved){
+        const r=JSON.parse(saved);
+        if(r && typeof r.code==="string" && r.code.length===4 && Array.isArray(r.leans) && r.leans.length===4){
+          state.result=r;
+          state.role=store.get("kognit_role")||state.role;
+        }
+      }
     }catch(e){}
   }
   // Rückkehr vom Stripe Payment Link (Redirect auf /?paid=1)
   const paid=new URLSearchParams(location.search).get("paid")==="1";
   if(paid){
     state.unlocked=true; store.set("kognit_unlocked","1");
-    history.replaceState(null,"",location.pathname);
+    if(store.ok) history.replaceState(null,"",location.pathname);
     if(state.result) state.screen="report";
   }
+  else if(state.result) state.screen = state.unlocked ? "report" : "reveal";
   render();
   if(paid) toast(state.result?"Zahlung erfolgreich — dein Report ist freigeschaltet.":"Zahlung erfolgreich! Mach den Test — dein Report ist danach sofort frei.");
 })();
 </script>
+</body>
+</html>
