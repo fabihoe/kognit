@@ -1109,7 +1109,7 @@ function viewReveal(){
         <div class="eyebrow">Der nächste Schritt</div>
         <h2>Schalte dein KI-Betriebssystem frei.</h2>
         <p>Deine ${a.promptLibrary?a.promptLibrary.length:14} maßgeschneiderten Prompts, die Delegations-Landkarte, Workflow-Vorlagen und Anti-Patterns — als ${a.name}.</p>
-        <button class="btn btn-accent btn-lg" onclick="go('paywall')">Vollen Report ansehen — 14 €
+        <button class="btn btn-accent btn-lg" onclick="go(state.unlocked?'report':'paywall')">${state.unlocked?"Deinen Report öffnen":"Vollen Report ansehen — 14 €"}
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         <div style="margin-top:16px"><button class="ghostlink" onclick="startTest()" style="font-size:13px">Test wiederholen</button></div>
       </div>
@@ -1170,10 +1170,10 @@ function viewPaywall(){
           </ul>
           <button class="btn btn-accent btn-block btn-lg" onclick="checkout()">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 2l1 4M6 6h14l-2 9H8z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
-            Mit Lemon Squeezy bezahlen</button>
-          <div class="ls-note"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 2l8 4v6c0 5-4 8-8 10-4-2-8-5-8-10V6z"/></svg><span>Sicherer Checkout über Lemon Squeezy (Merchant of Record — kümmert sich um EU-USt & Rechnung). Nach dem Kauf bekommst du einen Lizenzschlüssel.</span></div>
+            Jetzt freischalten — 14 €</button>
+          <div class="ls-note"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 2l8 4v6c0 5-4 8-8 10-4-2-8-5-8-10V6z"/></svg><span>Sicherer Checkout über Stripe (Karte, Apple Pay, Google Pay, Klarna u. a.). Nach der Zahlung kommst du automatisch hierher zurück — dein Report öffnet sich von selbst.</span></div>
 
-          <div class="divider-or">danach · schlüssel einlösen</div>
+          <div class="divider-or">oder · code einlösen</div>
           <div class="keyfield">
             <input id="licenseKey" placeholder="KOGNIT-XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false">
             <button class="btn btn-ghost" onclick="redeemKey()">Einlösen</button>
@@ -1312,19 +1312,20 @@ function answer(n){
 function prevQuestion(){ if(state.qi>0){ state.qi--; render(); } }
 function finishTest(){
   state.result=computeResult(state.answers);
+  // Ergebnis persistieren — überlebt den Stripe-Checkout-Roundtrip
+  store.set("kognit_result",JSON.stringify(state.result));
+  store.set("kognit_role",state.role);
   go("reveal");
 }
 function checkout(){
-  // Lemon Squeezy hosted checkout placeholder.
-  // In production: window.open("https://<store>.lemonsqueezy.com/checkout/buy/<variant>", "_blank")
-  toast("Platzhalter: hier öffnet sich der Lemon-Squeezy-Checkout");
+  // Stripe Payment Link; leitet nach der Zahlung zurück auf /?paid=1
+  window.location.href="https://buy.stripe.com/5kQaEQbIIbfJbaobAG6wE00";
 }
 function redeemKey(){
   const inp=document.getElementById("licenseKey");
   const msg=document.getElementById("keyMsg");
   const val=(inp.value||"").trim().toUpperCase();
-  // Placeholder validation. In production: validate via Lemon Squeezy
-  // license API (fetch) — CORS-enabled, fully client-side.
+  // Demo-Code KOGNIT-DEMO + manuell vergebene Support-Codes im KOGNIT-Format
   const valid = val==="KOGNIT-DEMO" || /^KOGNIT(-[A-Z0-9]{4}){3}$/.test(val);
   if(valid){
     state.unlocked=true; store.set("kognit_unlocked","1");
@@ -1558,11 +1559,28 @@ const ROLE_ICONS={
 const FAQ=[
   {q:"Ist das nur ein weiterer BuzzFeed-Test?",a:"Nein. Dahinter steckt ein psychometrisches Modell aus vier Verhaltensachsen dazu, wie Wissensarbeiter mit generativer KI arbeiten. Die Fragen sind gemischt gepolt und auf Trennschärfe gebaut, nicht auf Klicks optimiert."},
   {q:"Warum zahlen, wenn ChatGPT auch Prompts gibt?",a:"Weil hier kuratiert, getestet und auf deinen psychologischen Typ UND Beruf zugeschnitten ist — inklusive Delegations-Landkarte, Anti-Patterns und Rollen-Benchmark. Das spart Stunden Selbst-Zusammenbauen."},
-  {q:"Muss ich mich anmelden oder Daten hergeben?",a:"Nein. Der Test läuft komplett im Browser, ohne Anmeldung und ohne Datenverkauf. Den Report bekommst du über einen sicheren Checkout und einen Lizenzschlüssel."},
+  {q:"Muss ich mich anmelden oder Daten hergeben?",a:"Nein. Der Test läuft komplett im Browser, ohne Anmeldung und ohne Datenverkauf. Den Report bekommst du über einen sicheren Stripe-Checkout — direkt nach der Zahlung wird er in deinem Browser freigeschaltet."},
   {q:"Für wen ist das gemacht?",a:"Für Wissensarbeiter, die KI schon täglich nutzen: Berater, PMs, Marketer, Entwickler, Anwält:innen, Lehrende, Gründer:innen. Zum Start gibt es sechs Rollen mit maßgeschneiderten Inhalten."},
   {q:"Was, wenn sich die KI-Tools ändern?",a:"Dafür gibt es das optionale Update-Abo (29 €/Jahr) mit quartalsweise aktualisierten Prompt-Packs. Der Einmal-Report gehört dir trotzdem für immer."}
 ];
 
 /* ---- boot (after all data + functions are defined) ---- */
-render();
+(function boot(){
+  // Ergebnis aus früherer Session wiederherstellen (überlebt den Stripe-Roundtrip)
+  if(!state.result){
+    try{
+      const saved=store.get("kognit_result");
+      if(saved){ state.result=JSON.parse(saved); state.role=store.get("kognit_role")||state.role; }
+    }catch(e){}
+  }
+  // Rückkehr vom Stripe Payment Link (Redirect auf /?paid=1)
+  const paid=new URLSearchParams(location.search).get("paid")==="1";
+  if(paid){
+    state.unlocked=true; store.set("kognit_unlocked","1");
+    history.replaceState(null,"",location.pathname);
+    if(state.result) state.screen="report";
+  }
+  render();
+  if(paid) toast(state.result?"Zahlung erfolgreich — dein Report ist freigeschaltet.":"Zahlung erfolgreich! Mach den Test — dein Report ist danach sofort frei.");
+})();
 </script>
