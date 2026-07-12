@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Die vier Verhaltensachsen der KI-Nutzung — das Modell hinter Kognit</title>
+<meta name="description" content="Warum „Wie viel nutzt du KI?“ die falsche Frage ist — und welche vier Verhaltensachsen wirklich unterscheiden, wie Wissensarbeiter mit KI arbeiten. Das Framework hinter dem Kognit-Test, inklusive Methodik und ehrlicher Grenzen.">
+<link rel="canonical" href="https://arbeitstyp.de/vier-verhaltensachsen.html">
+<link rel="alternate" hreflang="de" href="https://arbeitstyp.de/vier-verhaltensachsen.html">
+<link rel="alternate" hreflang="en" href="https://arbeitstyp.de/en/four-axes.html">
+<link rel="alternate" hreflang="x-default" href="https://arbeitstyp.de/vier-verhaltensachsen.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Kognit">
+<meta property="og:locale" content="de_DE">
+<meta property="og:url" content="https://arbeitstyp.de/vier-verhaltensachsen.html">
+<meta property="og:title" content="Die vier Verhaltensachsen der KI-Nutzung">
+<meta property="og:description" content="Warum „Wie viel nutzt du KI?“ die falsche Frage ist — und welche vier Verhaltensachsen wirklich unterscheiden, wie Wissensarbeiter mit KI arbeiten.">
+<meta property="og:image" content="https://arbeitstyp.de/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/source-serif-4-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%234C48D1'/%3E%3Ctext%20x='16'%20y='23'%20font-size='20'%20font-family='Georgia,serif'%20font-weight='700'%20text-anchor='middle'%20fill='white'%3EK%3C/text%3E%3C/svg%3E">
+<script>(function(){try{var t=localStorage.getItem("kognit_theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Die vier Verhaltensachsen der KI-Nutzung","description":"Das Verhaltensmodell hinter dem Kognit-Test: vier Achsen, 16 Typen, Methodik und ehrliche Grenzen.","inLanguage":"de","datePublished":"2026-07-12","publisher":{"@type":"Organization","name":"Kognit","url":"https://arbeitstyp.de/"},"mainEntityOfPage":"https://arbeitstyp.de/vier-verhaltensachsen.html"}</script>
+<style>@font-face{font-family:"Source Serif 4";src:url("fonts/source-serif-4-var.woff2") format("woff2");font-weight:200 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Source Serif 4";src:url("fonts/source-serif-4-italic-var.woff2") format("woff2");font-weight:200 900;font-style:italic;font-display:swap}
+:root{--bg:#F3F5F9;--surface:#FAFBFD;--raised:#FFFFFF;--border:#D8DCE8;--border-strong:#C3C8DA;
+--ink:#14182B;--ink-2:#454C66;--ink-3:#666C84;--brand:#4C48D1;
+--shadow:0 1px 2px rgba(20,23,43,.04),0 12px 34px -18px rgba(20,23,43,.18);
+--accent-soft:rgba(76,72,209,.12);--on-accent:#fff;
+--serif:"Source Serif 4",ui-serif,"New York",Georgia,"Iowan Old Style",Cambria,"Times New Roman",serif;
+--sans:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,system-ui,sans-serif;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Cascadia Mono","Liberation Mono",monospace;
+--maxw:920px;--sp:clamp(18px,4vw,40px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#0B0E1C;--surface:#111527;--raised:#181D33;--border:#272E4A;--border-strong:#39406A;
+--ink:#EEF0FA;--ink-2:#A6ACCB;--ink-3:#8A91B4;--brand:#938BFC;
+--shadow:0 1px 2px rgba(0,0,0,.4),0 18px 40px -22px rgba(0,0,0,.7);--accent-soft:rgba(147,139,252,.16);--on-accent:#0B0E1C;color-scheme:dark}}
+:root[data-theme="light"]{--bg:#F3F5F9;--surface:#FAFBFD;--raised:#FFFFFF;--border:#D8DCE8;--border-strong:#C3C8DA;--ink:#14182B;--ink-2:#454C66;--ink-3:#666C84;--brand:#4C48D1;--accent-soft:rgba(76,72,209,.12);--on-accent:#fff;color-scheme:light}
+:root[data-theme="dark"]{--bg:#0B0E1C;--surface:#111527;--raised:#181D33;--border:#272E4A;--border-strong:#39406A;--ink:#EEF0FA;--ink-2:#A6ACCB;--ink-3:#8A91B4;--brand:#938BFC;--accent-soft:rgba(147,139,252,.16);--on-accent:#0B0E1C;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.02em;line-height:1.15}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--sp)}
+.topbar{position:sticky;top:0;z-index:60;backdrop-filter:saturate(1.4) blur(14px);background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--border)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;max-width:1120px}
+.brandmark{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px;text-decoration:none}
+.brandmark .dot{width:26px;height:26px;border-radius:7px;background:radial-gradient(120% 120% at 30% 20%,var(--brand) 0%,color-mix(in srgb,var(--brand) 55%,#000) 100%)}
+.cta{display:inline-flex;align-items:center;gap:10px;justify-content:center;background:var(--brand);color:var(--on-accent);
+font-weight:550;padding:14px 26px;border-radius:12px;text-decoration:none;white-space:nowrap;
+box-shadow:0 8px 22px -10px color-mix(in srgb,var(--brand) 80%,transparent);transition:transform .18s,box-shadow .2s}
+.cta:hover{transform:translateY(-1px)}
+.cta.small{padding:9px 18px;font-size:14.5px}
+.kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--brand);font-weight:500}
+.hero{padding:clamp(48px,8vw,90px) 0 clamp(28px,4vw,44px)}
+.hero h1{font-size:clamp(34px,5.6vw,58px);margin:16px 0 0;max-width:22ch;text-wrap:balance}
+.hero p{color:var(--ink-2);font-size:clamp(17px,2vw,19px);max-width:62ch;margin:22px 0 0}
+.meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:26px;color:var(--ink-3);font-size:14px}
+.herocta{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ghost{color:var(--ink-2);font-size:14.5px;text-decoration:underline;text-underline-offset:3px}
+section{padding:clamp(36px,6vw,64px) 0;border-top:1px solid var(--border)}
+section > .wrap > h2{font-size:clamp(25px,3.6vw,36px);margin:10px 0 0}
+.lead{color:var(--ink-2);margin:14px 0 0;max-width:60ch}
+.axgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:36px}
+.axcard{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:26px 24px;box-shadow:var(--shadow)}
+.axcard .ax{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.axcard h3{font-size:19px;margin:12px 0 8px}
+.axcard p{color:var(--ink-2);font-size:15px;margin:0}
+.typerow{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+.typecard{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:24px 22px;box-shadow:var(--shadow)}
+.typecard .code{font-family:var(--mono);font-size:12px;letter-spacing:.3em;color:var(--brand)}
+.typecard h3{font-size:19px;margin:10px 0 2px}
+.typecard .tag{font-family:var(--serif);font-style:italic;color:var(--ink-3);font-size:14.5px;margin:0 0 10px}
+.typecard p{color:var(--ink-2);font-size:14.5px;margin:0}
+.bench{margin-top:30px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:26px 24px;position:relative}
+.bench .prev{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);border:1px dashed var(--border-strong);padding:5px 10px;border-radius:20px;display:inline-flex;margin-bottom:14px}
+.bd{display:grid;grid-template-columns:150px 1fr 44px;gap:14px;align-items:center;font-size:13.5px;margin-top:12px}
+.bd .nm{color:var(--ink-3);font-family:var(--mono);font-size:12px}
+.bd .bt{height:8px;border-radius:99px;background:var(--border);overflow:hidden}
+.bd .bt i{display:block;height:100%;border-radius:99px;background:var(--brand);opacity:.75}
+.bd .pc{font-family:var(--mono);font-size:12px;color:var(--ink-3);text-align:right}
+.bench .note{font-size:12.5px;color:var(--ink-3);margin:16px 0 0}
+.blind{margin-top:36px;display:flex;flex-direction:column;gap:14px}
+.brow{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:22px 24px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+.brow .n{font-family:var(--mono);font-size:13px;color:var(--brand);border:1px solid color-mix(in srgb,var(--brand) 35%,var(--border));width:32px;height:32px;border-radius:10px;display:grid;place-items:center}
+.brow h3{font-size:17px;margin:2px 0 6px}
+.brow p{color:var(--ink-2);font-size:15px;margin:0}
+.faq{margin-top:30px;max-width:760px}
+.qa{border-top:1px solid var(--border)}
+.qa summary{list-style:none;cursor:pointer;padding:20px 0;display:flex;justify-content:space-between;gap:20px;font-weight:550;font-size:17px}
+.qa summary::-webkit-details-marker{display:none}
+.qa p{margin:0 0 20px;color:var(--ink-2);font-size:15.5px;max-width:64ch}
+.ctaband{margin:clamp(40px,6vw,64px) auto;text-align:center;padding:clamp(30px,5vw,52px) var(--sp);
+border:1px solid color-mix(in srgb,var(--brand) 34%,var(--border));border-radius:28px;
+background:radial-gradient(120% 140% at 50% 0%,var(--accent-soft) 0%,transparent 60%),var(--surface);max-width:var(--maxw)}
+.ctaband h2{font-size:clamp(24px,3.6vw,34px);margin:0 auto;max-width:22ch}
+.ctaband p{color:var(--ink-2);max-width:52ch;margin:14px auto 0}
+.ctaband .cta{margin-top:26px}
+.subnote{color:var(--ink-3);font-size:13px;margin-top:14px}
+footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font-size:13.5px}
+footer .wrap{display:flex;flex-direction:column;gap:14px}
+footer a{text-decoration:underline;text-underline-offset:2px}
+.otherroles{display:flex;gap:10px 18px;flex-wrap:wrap}
+@media (max-width:760px){.axgrid,.typerow{grid-template-columns:1fr}.bd{grid-template-columns:110px 1fr 40px}}
+@media (max-width:520px){.topbar .links{display:none}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap">
+  <a class="brandmark" href="./"><span class="dot"></span> Kognit</a>
+  <a class="cta small" href="./">Test starten</a>
+</div></div>
+<main>
+<div class="hero"><div class="wrap">
+  <div class="kicker">Framework · Version 1</div>
+  <h1>Die vier Verhaltensachsen der KI-Nutzung</h1>
+  <p>Zwei Menschen, derselbe Beruf, dasselbe Tool — und komplett unterschiedliche Arbeit. Die eine zerlegt jede Aufgabe in Häppchen und prüft jede Zahl nach, der andere schickt ganze Arbeitspakete los und liest nur das Ergebnis. Der Unterschied liegt nicht im Können und nicht im Modell. Er liegt im Verhalten — und das lässt sich auf vier Achsen beschreiben.</p>
+  <div class="herocta">
+    <a class="cta" href="./">Wo stehst du? Mach den Test — kostenlos</a>
+    <a class="ghost" href="#methodik">Direkt zur Methodik</a>
+  </div>
+  <div class="meta"><span>~7 Minuten Lesezeit</span><span>Modell hinter arbeitstyp.de</span><span>Stand: Juli 2026</span></div>
+</div></div>
+
+<section><div class="wrap">
+  <div class="kicker">Die falsche Frage</div>
+  <h2>„Wie viel nutzt du KI?“ misst das Falsche.</h2>
+  <p class="lead">Die meisten Umfragen und Team-Retros stellen die Intensitätsfrage: täglich, wöchentlich, nie? Das ist ungefähr so aufschlussreich wie „Wie viel telefonierst du?“ im Jahr 1995. Interessant ist nicht, <em>wie oft</em> jemand ein Sprachmodell öffnet — sondern <em>welche Form</em> die Zusammenarbeit hat.</p>
+  <p class="lead">Wer täglich KI nutzt, kann trotzdem wie mit einer besseren Suchmaschine arbeiten: Frage rein, Antwort raus, weiter im eigenen Trott. Und wer sie nur zweimal pro Woche öffnet, delegiert vielleicht ganze Arbeitspakete mit klarem Auftrag und Abnahmekriterien. Dieselbe „Nutzungsintensität“, zwei völlig verschiedene Arbeitsweisen. Ein brauchbares Modell muss deshalb Verhalten beschreiben, nicht Häufigkeit. Vier Fragen reichen, um die Form der Zusammenarbeit aufzuspannen.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker">Das Modell</div>
+  <h2>Vier Achsen, die tatsächlich unterscheiden.</h2>
+  <div class="axgrid">
+    <div class="axcard"><div class="ax">Achse 1 · Delegation</div><h3>Assistent ↔ Autopilot</h3><p>Wie viel gibst du ab? Am einen Pol bekommt die KI kleine, eng umrissene Teilaufgaben — den nächsten Absatz, die eine Formel. Am anderen Pol bekommt sie ganze Aufgaben samt Kontext und liefert Ergebnisse, keine Bausteine.</p></div>
+    <div class="axcard"><div class="ax">Achse 2 · Kontrolle</div><h3>Prüfer ↔ Vertrauer</h3><p>Wie sehr verifizierst du? Prüfer kontrollieren Quellen, Zahlen und Logik, bevor irgendetwas weiterverwendet wird. Vertrauer übernehmen überzeugenden Output direkt — schneller, aber mit anderem Risikoprofil.</p></div>
+    <div class="axcard"><div class="ax">Achse 3 · Fokus</div><h3>Denkpartner ↔ Macher</h3><p>Wofür nutzt du KI? Als Sparringspartner fürs Denken — Ideen schärfen, Strukturen testen, Gegenargumente hören? Oder als Produktionsmaschine für fertigen Output — Texte, Tabellen, Code?</p></div>
+    <div class="axcard"><div class="ax">Achse 4 · Methode</div><h3>Architekt ↔ Improvisierer</h3><p>Wie steuerst du? Architekten bauen wiederverwendbare Systeme: Prompt-Vorlagen, feste Abläufe, Bausteine. Improvisierer tasten sich im freien Dialog vor und lassen den Prompt aus dem Gespräch entstehen.</p></div>
+  </div>
+  <p class="lead" style="margin-top:32px">Wichtig: Keine Seite ist „besser“. Ein Prüfer, der juristische Schriftsätze baut, ist genau richtig unterwegs; ein Vertrauer, der Brainstorming-Material erzeugt, auch. Problematisch wird es erst, wenn Achsen-Position und Aufgabe nicht zusammenpassen — der Vertrauer im Vertragsrecht, der Prüfer, der für ein Moodboard drei Stunden Quellen checkt. Genau diese Passung sichtbar zu machen, ist der Zweck des Modells.</p>
+</div></section>
+
+<section id="methodik"><div class="wrap">
+  <div class="kicker">Methodik</div>
+  <h2>Wie der Test misst — und wo seine Grenzen liegen.</h2>
+  <p class="lead">Der <a href="./">Kognit-Test</a> operationalisiert jede Achse mit sechs Aussagen, insgesamt 24, beantwortet auf einer fünfstufigen Zustimmungsskala. Drei Konstruktionsentscheidungen sind erwähnenswert:</p>
+  <div class="blind">
+    <div class="brow"><div class="n">1</div><div><h3>Gemischte Polung</h3><p>Die Hälfte der Aussagen ist zugunsten des einen Pols formuliert, die Hälfte zugunsten des anderen („Ich gebe der KI am liebsten eine ganze Aufgabe“ vs. „Ich zerlege Aufgaben lieber in kleine Häppchen“). Wer allem zustimmt, landet in der Mitte statt am Rand — Ja-Sage-Tendenz wird gedämpft, nicht belohnt.</p></div></div>
+    <div class="brow"><div class="n">2</div><div><h3>Verhalten statt Einstellung</h3><p>Die Aussagen beschreiben konkretes Arbeitsverhalten („Ich prüfe faktische Aussagen grundsätzlich nach“), nicht Meinungen über KI („KI wird die Arbeitswelt verändern“). Verhalten ist näher an dem, was im Alltag tatsächlich passiert — und leichter ehrlich zu beantworten.</p></div></div>
+    <div class="brow"><div class="n">3</div><div><h3>Deterministisches Scoring</h3><p>Aus den vier Achsenwerten ergibt sich einer von 16 Typen — transparent und reproduzierbar, keine Blackbox. Wer denselben Fragebogen gleich beantwortet, bekommt denselben Typ.</p></div></div>
+  </div>
+  <p class="lead" style="margin-top:32px"><strong>Und die Grenzen, ohne Ausflüchte:</strong> Das Modell ist theoriegeleitet konstruiert, aber noch nicht an einer großen Stichprobe validiert — Reliabilitäts- und Strukturprüfung stehen aus und folgen, sobald genügend echte Antwortdaten vorliegen. Es ist Selbstauskunft, mit allen bekannten Verzerrungen. Und die Rollen-Benchmarks im Test sind bis dahin ausdrücklich als Modell-Vorschau gekennzeichnet, nicht als Messung. Wir publizieren keine Prävalenzzahlen („X % aller Berater sind Typ Y“), bevor es belastbare Daten gibt.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker">Die Typologie</div>
+  <h2>16 Typen aus vier Buchstaben.</h2>
+  <p class="lead">Jede Achsen-Kombination ergibt einen Typ mit eigenem Vier-Buchstaben-Code — von EPDA, dem Uhrmacher, bis WVMI, dem Pionier. Die Namen sind Merkhilfen, keine Schubladen: Der Code dahinter zeigt die vier Positionen, und die sind das eigentliche Ergebnis.</p>
+  <div class="typerow">
+  <div class="typecard"><div class="code">E P D A</div><h3>Der Uhrmacher</h3><p class="tag">„Präzision vor Tempo, jedes Rädchen sitzt.“</p></div>
+  <div class="typecard"><div class="code">E P D I</div><h3>Der Sokratiker</h3><p class="tag">„Denkt sich durch, im Dialog statt im Alleingang.“</p></div>
+  <div class="typecard"><div class="code">E P M A</div><h3>Der Feinmechaniker</h3><p class="tag">„Handwerk mit KI, kontrolliert und in Serie.“</p></div>
+  <div class="typecard"><div class="code">E P M I</div><h3>Der Tüftler</h3><p class="tag">„Hands-on, prüfend, immer am Basteln.“</p></div>
+  <div class="typecard"><div class="code">E V D A</div><h3>Der Stratege</h3><p class="tag">„Kleine Züge, großer Plan, Vertrauen ins Werkzeug.“</p></div>
+  <div class="typecard"><div class="code">E V D I</div><h3>Der Ideenreiter</h3><p class="tag">„Spielt, springt, vertraut dem Funken.“</p></div>
+  <div class="typecard"><div class="code">E V M A</div><h3>Der Kurator</h3><p class="tag">„Wählt gut aus und vertraut dem, was er wählt.“</p></div>
+  <div class="typecard"><div class="code">E V M I</div><h3>Der Sprinter</h3><p class="tag">„Von Idee zu Ergebnis ohne Umwege.“</p></div>
+  <div class="typecard"><div class="code">W P D A</div><h3>Der Feldherr</h3><p class="tag">„Delegiert im Großen, kontrolliert an den richtigen Stellen.“</p></div>
+  <div class="typecard"><div class="code">W P D I</div><h3>Der Forscher</h3><p class="tag">„Gibt viel ab, hinterfragt alles, folgt der Spur.“</p></div>
+  <div class="typecard"><div class="code">W P M A</div><h3>Der Produzent</h3><p class="tag">„Baut Pipelines und prüft die Ausfahrt.“</p></div>
+  <div class="typecard"><div class="code">W P M I</div><h3>Der Generalist</h3><p class="tag">„Viel, schnell, geprüft, egal was reinkommt.“</p></div>
+  <div class="typecard"><div class="code">W V D A</div><h3>Der Visionär</h3><p class="tag">„Großes Bild, großes Vertrauen, klarer Rahmen.“</p></div>
+  <div class="typecard"><div class="code">W V D I</div><h3>Der Alchemist</h3><p class="tag">„Mischt, experimentiert, vertraut der Reaktion.“</p></div>
+  <div class="typecard"><div class="code">W V M A</div><h3>Der Dirigent</h3><p class="tag">„Orchestriert Systeme und lässt sie laufen.“</p></div>
+  <div class="typecard"><div class="code">W V M I</div><h3>Der Pionier</h3><p class="tag">„Maximal delegiert, maximal schnell, immer voraus.“</p></div>
+  </div>
+</div></section>
+
+<div class="ctaband">
+  <h2>Und welcher Typ bist du?</h2>
+  <p>24 Fragen, rund 4 Minuten, keine Anmeldung. Dein Archetyp, dein Achsen-Profil und deine blinden Flecken — kostenlos.</p>
+  <a class="cta" href="./">Test starten — kostenlos</a>
+  <div class="subnote">Der volle Report (Prompt-Bibliothek, Delegations-Landkarte, Workflows) kostet einmalig 14 €.</div>
+</div>
+</main>
+<footer><div class="wrap">
+  <div>Rollen-Ausgaben: <span class="otherroles"><a href="ki-beratung.html">Consulting</a> <a href="ki-product-management.html">Product Management</a> <a href="ki-marketing.html">Marketing</a> <a href="ki-entwicklung.html">Software-Entwicklung</a> <a href="ki-recht.html">Recht</a> <a href="ki-forschung-lehre.html">Forschung &amp; Lehre</a> <a href="ki-gruendung.html">Gründung</a></span></div>
+  <div>© Kognit · <a href="./">Der KI-Arbeitstyp-Test</a> · <a href="en/four-axes.html" hreflang="en">English version</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="widerruf.html">Widerruf</a></div>
+</div></footer>
+</body>
+</html>
