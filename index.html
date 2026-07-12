@@ -31,8 +31,21 @@
 {"@type":"Question","name":"Was kostet der Test?","acceptedAnswer":{"@type":"Answer","text":"Der Test und dein Archetyp-Ergebnis sind kostenlos. Der komplette Report mit Prompt-Bibliothek, Delegations-Landkarte und Workflows kostet einmalig 14 Euro."}}
 ]}
 </script>
+<link rel="preload" href="fonts/source-serif-4-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%234C48D1'/%3E%3Ctext%20x='16'%20y='23'%20font-size='20'%20font-family='Georgia,serif'%20font-weight='700'%20text-anchor='middle'%20fill='white'%3EK%3C/text%3E%3C/svg%3E">
 <style>
+@font-face{
+  font-family:"Source Serif 4";
+  src:url("fonts/source-serif-4-var.woff2") format("woff2");
+  font-weight:200 900;font-style:normal;font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Source Serif 4";
+  src:url("fonts/source-serif-4-italic-var.woff2") format("woff2");
+  font-weight:200 900;font-style:italic;font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
 /* ============================================================
    KOGNIT — design tokens
    Neutrals biased toward indigo. Deep night ground + cool
@@ -56,7 +69,7 @@
   --accent-soft:rgba(76,72,209,.12);
   --on-accent:#fff;          /* legible text/graphic on top of accent/brand */
 
-  --serif:ui-serif,"New York","Iowan Old Style","Palatino Linotype",Palatino,Georgia,Cambria,"Times New Roman",serif;
+  --serif:"Source Serif 4",ui-serif,"New York",Georgia,"Iowan Old Style",Cambria,"Times New Roman",serif;
   --sans:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,system-ui,sans-serif;
   --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Cascadia Mono","Liberation Mono",monospace;
 
@@ -647,41 +660,41 @@ footer a{color:inherit;text-decoration:underline;text-underline-offset:2px}
         <p>Jede Rolle nutzt KI anders. Der Test mündet in ein Betriebssystem, das zu deinem Berufsalltag passt.</p>
       </div>
       <div class="roles-grid">
-    <div class="rolecard">
+    <a class="rolecard" href="ki-beratung.html" style="display:block;text-decoration:none">
       <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 21V11l6-4 6 4v10M10 21v-5h4v5"/></svg></div>
       <h3>Beratung</h3>
       <p>Kaum eine Rolle spannt KI so weit auf wie die Beratung — Denkpartner fürs Storyline-Sparring, Maschine für den Foliensatz — und auf der Kontroll-Achse entscheidet sich, wessen Zahlen den Partner-Check überstehen: Spannend, wo du dich einordnest.</p>
-    </div>
-    <div class="rolecard">
+    </a>
+    <a class="rolecard" href="ki-product-management.html" style="display:block;text-decoration:none">
       <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 9v11"/></svg></div>
       <h3>Product Management</h3>
       <p>Product Manager nutzen KI unserem Modell nach vor allem als Denkpartner — für Priorisierung, Specs und das Durchspielen von Trade-offs — während die Delegations-Achse überraschend weit auseinandergeht: Zerlegst du in Häppchen, oder schickst du ganze Discovery-Aufgaben auf Reisen?</p>
-    </div>
-    <div class="rolecard">
+    </a>
+    <a class="rolecard" href="ki-marketing.html" style="display:block;text-decoration:none">
       <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l14-6v14L3 13zM17 8a3 3 0 010 6"/></svg></div>
       <h3>Marketing</h3>
       <p>Im Marketing zieht die Fokus-Achse in unserem Modell klar Richtung Macher — Content, Kampagnen, Varianten in Serie — doch die spannendere Frage stellt die Kontroll-Achse: Wer lässt Ton und Marke wirklich von der KI mitschreiben, und wer wacht darüber?</p>
-    </div>
-    <div class="rolecard">
+    </a>
+    <a class="rolecard" href="ki-entwicklung.html" style="display:block;text-decoration:none">
       <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13 6l-2 12"/></svg></div>
       <h3>Software-Entwicklung</h3>
       <p>Nirgendwo geht die Delegations-Achse so weit auf wie in der Software-Entwicklung — vom Zeile-für-Zeile-Autocomplete bis zum Agenten, der ganze Tickets abräumt — und unser Modell erwartet hier die systematischsten Architekt-Setups überhaupt: Wie sieht deins aus?</p>
-    </div>
-    <div class="rolecard">
+    </a>
+    <a class="rolecard" href="ki-recht.html" style="display:block;text-decoration:none">
       <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M7 7l-3 6a3 3 0 006 0zM17 7l-3 6a3 3 0 006 0z"/></svg></div>
       <h3>Recht</h3>
       <p>Recht ist die Rolle, in der die Kontroll-Achse fast schon berufsethisch vorgegeben scheint — Prüfer, durchweg — und genau deshalb ist hier so aufschlussreich, wo die anderen drei Achsen die Unterschiede machen: Vermutlich bist du weniger typisch, als das Klischee behauptet.</p>
-    </div>
-    <div class="rolecard">
+    </a>
+    <a class="rolecard" href="ki-forschung-lehre.html" style="display:block;text-decoration:none">
       <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-4 9 4-9 4zM7 10v5c0 1.5 2.2 3 5 3s5-1.5 5-3v-5"/></svg></div>
       <h3>Lehre & Forschung</h3>
       <p>Für Lehre & Forschung erwartet unser Modell den stärksten Denkpartner-Ausschlag aller Rollen — KI als Sparring für Argumente, Studiendesigns und Reviewer-2-Simulationen — bei gleichzeitig kompromissloser Quellen-Prüfung: Passt du in dieses Bild, oder brichst du es?</p>
-    </div>
-    <div class="rolecard">
+    </a>
+    <a class="rolecard" href="ki-gruendung.html" style="display:block;text-decoration:none">
       <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 2 5 5 5 9a5 5 0 01-10 0c0-4 2-7 5-9zM9 21h6"/></svg></div>
       <h3>Gründung / Solo</h3>
       <p>Gründer:innen und Solos spannen KI über das breiteste Aufgabenfeld aller Rollen — vom Pitch bis zur Buchhaltung — und tendieren in unserem Modell am stärksten Richtung Autopilot, denn wo kein Team ist, wird die KI zum Team: Die Frage ist, wie viel du ihr wirklich überlässt.</p>
-    </div></div>
+    </a></div>
     </div>
   </section>
 
@@ -1118,12 +1131,13 @@ function render(){
 function viewLanding(){
   const chips = META.map(m=>`<div class="typechip" data-code="${m.code}" title="${m.name}">
       <canvas data-glyph="${m.code}"></canvas><span class="code">${m.code}</span></div>`).join("");
+  const ROLE_PAGES={beratung:"ki-beratung.html",pm:"ki-product-management.html",marketing:"ki-marketing.html",dev:"ki-entwicklung.html",recht:"ki-recht.html",lehre:"ki-forschung-lehre.html",gruendung:"ki-gruendung.html"};
   const roleCards = ROLES.filter(r=>r.key!=="andere").map(r=>`
-    <div class="rolecard">
+    <a class="rolecard" href="${ROLE_PAGES[r.key]||"#"}" style="display:block;text-decoration:none">
       <div class="glyph">${ROLE_ICONS[r.key]||ROLE_ICONS.andere}</div>
       <h3>${r.label}</h3>
       <p>${r.benchmarkTeaser||"Wie dein Beruf typischerweise mit KI arbeitet — und wo dein persönlicher Stil abweicht."}</p>
-    </div>`).join("");
+    </a>`).join("");
   return `
   <section class="hero">
     <canvas class="hero-orbit" id="heroOrbit"></canvas>
@@ -1717,9 +1731,9 @@ function renderBadge(){
   ctx.fillText("KOGNIT · KI-ARBEITSTYP", 80, 120);
   ctx.fillStyle=ac; ctx.font="600 30px ui-monospace,Menlo,monospace";
   ctx.fillText(a.code.split("").join("  "), 80, 300);
-  ctx.fillStyle="#EDEFFA"; ctx.font="600 76px ui-serif,Georgia,serif";
+  ctx.fillStyle="#EDEFFA"; ctx.font='600 76px "Source Serif 4",ui-serif,Georgia,serif';
   ctx.fillText(a.name, 78, 375);
-  ctx.fillStyle="rgba(237,239,250,.72)"; ctx.font="italic 30px ui-serif,Georgia,serif";
+  ctx.fillStyle="rgba(237,239,250,.72)"; ctx.font='italic 30px "Source Serif 4",ui-serif,Georgia,serif';
   wrapText(ctx,"„"+a.tagline+"“",80,430,520,38);
   const role=ROLES.find(r=>r.key===state.role);
   ctx.fillStyle="rgba(255,255,255,.55)"; ctx.font="500 22px ui-sans-serif,system-ui,sans-serif";
@@ -1795,8 +1809,8 @@ function animateReveal(){
     document.querySelectorAll(".axtrack .fill").forEach(f=>{ f.style.width=(+f.dataset.lean)+"%"; });
     document.querySelectorAll(".axtrack .knob").forEach(k=>{ k.style.left=(+k.dataset.lean)+"%"; setTimeout(()=>k.classList.add("show"),300); });
   }, reduceMotion()?0:900);
-  // badge
-  setTimeout(renderBadge, 60);
+  // badge — erst wenn die Webfonts geladen sind (sonst Fallback-Schrift im PNG)
+  try{ document.fonts.ready.then(()=>setTimeout(renderBadge,30)); }catch(e){ setTimeout(renderBadge,60); }
 }
 
 let heroRAF=null;
