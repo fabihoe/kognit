@@ -4,7 +4,7 @@
 
 Ein kostenloser 3-Minuten-Test, der misst, wie du wirklich mit KI arbeitest: 24 Fragen, 4 Verhaltensachsen, 16 KI-Arbeitstypen. Ergebnis sofort und ohne Login.
 
-Basierend auf einer Masterarbeit an der TU München zu generativer KI und Wissensarbeit.
+Fundiert durch wissenschaftliche Forschung zu generativer KI und Mensch-KI-Zusammenarbeit.
 
 ## Rollen-Seiten
 
