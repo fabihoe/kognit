@@ -6,4 +6,11 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url><loc>https://arbeitstyp.de/ki-beratung.html</loc></url>
+  <url><loc>https://arbeitstyp.de/ki-product-management.html</loc></url>
+  <url><loc>https://arbeitstyp.de/ki-marketing.html</loc></url>
+  <url><loc>https://arbeitstyp.de/ki-entwicklung.html</loc></url>
+  <url><loc>https://arbeitstyp.de/ki-recht.html</loc></url>
+  <url><loc>https://arbeitstyp.de/ki-forschung-lehre.html</loc></url>
+  <url><loc>https://arbeitstyp.de/ki-gruendung.html</loc></url>
 </urlset>

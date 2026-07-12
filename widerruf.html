@@ -7,6 +7,18 @@
 <meta name="description" content="Widerrufsbelehrung für den Kauf des Kognit-Reports (digitaler Inhalt).">
 <script>(function(){try{var t=localStorage.getItem("kognit_theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 <style>
+@font-face{
+  font-family:"Source Serif 4";
+  src:url("fonts/source-serif-4-var.woff2") format("woff2");
+  font-weight:200 900;font-style:normal;font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Source Serif 4";
+  src:url("fonts/source-serif-4-italic-var.woff2") format("woff2");
+  font-weight:200 900;font-style:italic;font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
 /* ============================================================
    KOGNIT — legal page (tokens identisch zu index.html)
    ============================================================ */
@@ -18,14 +30,14 @@
   --border-strong:#C3C8DA;
   --ink:#14182B;
   --ink-2:#454C66;
-  --ink-3:#7C829B;
+  --ink-3:#666C84;
   --brand:#4C48D1;
   --brand-ink:#3E3AB8;
   --shadow:0 1px 2px rgba(20,23,43,.04), 0 12px 34px -18px rgba(20,23,43,.18);
   --accent:#4C48D1;
   --accent-soft:rgba(76,72,209,.12);
   --on-accent:#fff;
-  --serif:ui-serif,"New York","Iowan Old Style","Palatino Linotype",Palatino,Georgia,Cambria,"Times New Roman",serif;
+  --serif:"Source Serif 4",ui-serif,"New York",Georgia,"Iowan Old Style",Cambria,"Times New Roman",serif;
   --sans:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,system-ui,sans-serif;
   --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Cascadia Mono","Liberation Mono",monospace;
   --maxw:1120px;
@@ -36,7 +48,7 @@
 @media (prefers-color-scheme:dark){
   :root{
     --bg:#0B0E1C; --surface:#111527; --raised:#181D33; --border:#272E4A; --border-strong:#39406A;
-    --ink:#EEF0FA; --ink-2:#A6ACCB; --ink-3:#6A7194; --brand:#938BFC; --brand-ink:#A9A3FF;
+    --ink:#EEF0FA; --ink-2:#A6ACCB; --ink-3:#8A91B4; --brand:#938BFC; --brand-ink:#A9A3FF;
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 18px 40px -22px rgba(0,0,0,.7);
     --accent:#938BFC; --accent-soft:rgba(147,139,252,.16); --on-accent:#0B0E1C;
     color-scheme:dark;
@@ -44,13 +56,13 @@
 }
 :root[data-theme="light"]{
   --bg:#F3F5F9; --surface:#FAFBFD; --raised:#FFFFFF; --border:#D8DCE8; --border-strong:#C3C8DA;
-  --ink:#14182B; --ink-2:#454C66; --ink-3:#7C829B; --brand:#4C48D1; --brand-ink:#3E3AB8;
+  --ink:#14182B; --ink-2:#454C66; --ink-3:#666C84; --brand:#4C48D1; --brand-ink:#3E3AB8;
   --shadow:0 1px 2px rgba(20,23,43,.04), 0 12px 34px -18px rgba(20,23,43,.18);
   --accent:#4C48D1; --accent-soft:rgba(76,72,209,.12); --on-accent:#fff; color-scheme:light;
 }
 :root[data-theme="dark"]{
   --bg:#0B0E1C; --surface:#111527; --raised:#181D33; --border:#272E4A; --border-strong:#39406A;
-  --ink:#EEF0FA; --ink-2:#A6ACCB; --ink-3:#6A7194; --brand:#938BFC; --brand-ink:#A9A3FF;
+  --ink:#EEF0FA; --ink-2:#A6ACCB; --ink-3:#8A91B4; --brand:#938BFC; --brand-ink:#A9A3FF;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 18px 40px -22px rgba(0,0,0,.7);
   --accent:#938BFC; --accent-soft:rgba(147,139,252,.16); --on-accent:#0B0E1C; color-scheme:dark;
 }
