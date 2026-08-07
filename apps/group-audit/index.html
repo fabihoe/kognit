@@ -47,7 +47,8 @@
     <li>Notification schemes, incl. group-custom-field notifications flagged for manual review</li>
     <li>Project roles in every project, plus default role actors</li>
     <li>Issue security scheme levels</li>
-    <li>Filter and dashboard sharing &amp; editing grants</li>
+    <li>Filter sharing &amp; editing grants, filter JQL using <code>membersOf(…)</code>, and filter subscriptions sent to the group</li>
+    <li>Dashboard sharing &amp; editing grants</li>
     <li>Product access (application role groups)</li>
     <li>Member counts — including deactivated accounts still in the group</li>
   </ul>
@@ -55,25 +56,30 @@
   <div class="panel">
     <strong>Honest by design.</strong> If any check cannot finish, the report is marked
     <em>incomplete</em> — in the UI and in the CSV export — because an audit tool must
-    never silently omit. What the app can't scan (workflow conditions, global
-    permission grants) is disclosed openly instead of hidden.
+    never silently omit. Every report also carries <em>coverage notes</em> that spell
+    out what this version cannot scan (workflow conditions, comment visibility
+    restrictions, automation rules, global permission grants and more) instead of
+    hiding it. See the <a href="docs/">documentation</a> for the full list.
   </div>
+
+  <h2>Documentation &amp; support</h2>
+  <p>
+    Setup, usage and the CSV column reference are in the
+    <a href="docs/">documentation</a>. Questions, bug reports, feature requests:
+    see the <a href="support/">support page</a> or write to
+    <a href="mailto:kontakt@arbeitstyp.de">kontakt@arbeitstyp.de</a>.
+    We usually reply within two business days.
+  </p>
 
   <h2>Privacy in one sentence</h2>
   <p>
     The app is read-only, stores nothing, and no data ever leaves your Atlassian
     instance — see the <a href="privacy.html">privacy policy</a>.
   </p>
-
-  <h2>Support</h2>
-  <p>
-    Questions, bug reports, feature requests:
-    <a href="mailto:kontakt@arbeitstyp.de">kontakt@arbeitstyp.de</a>.
-    We usually reply within two business days.
-  </p>
 </main>
 <footer>
-  Group Audit for Jira · <a href="privacy.html">Privacy policy</a> ·
+  Group Audit for Jira · <a href="docs/">Documentation</a> ·
+  <a href="support/">Support</a> · <a href="privacy.html">Privacy policy</a> ·
   Jira is a trademark of Atlassian Pty Ltd. This app is not affiliated with or endorsed by Atlassian.
 </footer>
 </body>
