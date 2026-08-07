@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documentation — Group Audit for Jira</title>
+<meta name="description" content="Documentation for Group Audit for Jira: setup, running a scan, reading the report, CSV column reference, coverage notes and troubleshooting.">
+<style>
+  :root { --text:#1c1e21; --muted:#5c6066; --bg:#ffffff; --panel:#f5f6f7; --border:#e0e2e5; --accent:#1868db; }
+  @media (prefers-color-scheme: dark) {
+    :root { --text:#d6d7d9; --muted:#9a9da3; --bg:#1b1c1e; --panel:#242628; --border:#3a3d40; --accent:#669df1; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); line-height:1.65; }
+  main { max-width:720px; margin:0 auto; padding:48px 20px 64px; }
+  h1 { font-size:1.7rem; margin:0 0 4px; }
+  .meta { color:var(--muted); font-size:0.9rem; margin:0 0 28px; }
+  h2 { font-size:1.15rem; margin:32px 0 8px; }
+  h3 { font-size:1rem; margin:20px 0 6px; }
+  ul, ol { padding-left:20px; margin:8px 0; }
+  li { margin:4px 0; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  code { background:var(--panel); border:1px solid var(--border); border-radius:4px; padding:1px 5px; font-size:0.88em; }
+  .panel { background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin:18px 0; }
+  table { border-collapse:collapse; width:100%; font-size:0.92rem; margin:10px 0; }
+  th, td { border:1px solid var(--border); padding:6px 10px; text-align:left; vertical-align:top; }
+  th { background:var(--panel); }
+  .tablewrap { overflow-x:auto; }
+  footer { max-width:720px; margin:0 auto; padding:20px 20px 40px; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Documentation — Group Audit for Jira</h1>
+  <p class="meta">Setup, usage, CSV reference and troubleshooting.</p>
+
+  <h2>1. Setup</h2>
+  <ol>
+    <li>Install <strong>Group Audit for Jira</strong> from the Atlassian Marketplace
+      (as a Jira admin: <em>Apps → Explore more apps</em>, search for
+      “Group Audit”, then <em>Install</em>).</li>
+    <li>Open it under <em>Jira Settings (⚙) → Apps → Group Audit</em>.
+      The page is visible to Jira administrators only, and the app additionally
+      verifies the ADMINISTER permission on every request.</li>
+    <li>No configuration is needed. The app stores nothing and writes nothing.</li>
+  </ol>
+
+  <h2>2. Running a scan</h2>
+  <ol>
+    <li>Start typing a group name and pick the group from the suggestion list
+      (keyboard: arrow keys + Enter).</li>
+    <li>Click <strong>Scan usages</strong>. A checklist shows each area being
+      scanned. Large sites are scanned in resumable chunks; hundreds of projects
+      or thousands of filters are fine — the scan just takes longer.</li>
+    <li>Read the summary (“N usages in M places · affects P projects”), the
+      result table, and — always — the <strong>coverage notes</strong> at the bottom.</li>
+  </ol>
+
+  <h3>What is scanned</h3>
+  <ul>
+    <li><strong>Permission schemes</strong> — the group as a permission holder, attributed to the projects using the scheme</li>
+    <li><strong>Notification schemes</strong> — the group as a notification recipient (group-custom-field notifications are flagged “Manual check required” instead of guessed)</li>
+    <li><strong>Project roles</strong> — the group as a role actor in every project, plus default role actors for future projects</li>
+    <li><strong>Issue security schemes</strong> — the group as a security-level member</li>
+    <li><strong>Filters</strong> — sharing and editing grants (all filters, via admin override), JQL that references the group via <code>membersOf(…)</code>, and filter subscriptions emailed to the group</li>
+    <li><strong>Dashboards</strong> — sharing and editing grants, as visible to your account (see coverage notes below)</li>
+    <li><strong>Product access</strong> — application-role access groups, incl. the default-for-new-users flag</li>
+    <li><strong>Group members</strong> — total, active and deactivated member counts for context</li>
+  </ul>
+
+  <h3>What is not scanned (coverage notes)</h3>
+  <p>Every report discloses its limits — in the UI and in the CSV:</p>
+  <ul>
+    <li>Workflow conditions and board/sprint permissions</li>
+    <li>Comment and worklog visibility restrictions</li>
+    <li>Values of group-picker custom fields on issues</li>
+    <li>Automation rule conditions</li>
+    <li>Archived projects and archived dashboards</li>
+    <li>Global permission grants (Jira Cloud exposes no API for their grantees)</li>
+    <li>Projects whose app access has been revoked (cannot be scanned for roles)</li>
+    <li><strong>Dashboards:</strong> Jira’s dashboard search has no admin override, so
+      it returns only dashboards visible to <em>your</em> account. If you are a member
+      of the audited group, that covers everything shared with it; if not, the report
+      says so in a coverage note.</li>
+  </ul>
+
+  <div class="panel">
+    <strong>Rule of thumb:</strong> a report is a decision aid, not a green light.
+    Read the coverage notes, and never delete a group based on an
+    <em>incomplete</em> report.
+  </div>
+
+  <h2>3. CSV export</h2>
+  <p>
+    <strong>Download CSV</strong> saves the full report;
+    <strong>Copy CSV</strong> puts it on the clipboard. The file is UTF-8 with BOM
+    (opens correctly in Excel, Google Sheets and Numbers). Values that could be
+    interpreted as spreadsheet formulas are prefixed with an apostrophe on purpose
+    (formula-injection protection).
+  </p>
+  <div class="tablewrap">
+  <table>
+    <tr><th>Column</th><th>Meaning</th></tr>
+    <tr><td>Surface</td><td>Where the group is used (e.g. “Permission scheme”, “Filter JQL”) — plus the special rows “Manual check required”, “Scan error” and “Coverage note”</td></tr>
+    <tr><td>Location</td><td>The scheme, project, filter or dashboard name</td></tr>
+    <tr><td>Detail</td><td>The specific grant, event, role or note</td></tr>
+    <tr><td>Projects</td><td>Affected projects; “unknown (lookup failed)” or “(list may be incomplete)” when attribution data could not be fully read — never silently empty</td></tr>
+    <tr><td>Link</td><td>Deep link to the place in Jira (or admin.atlassian.com for product access)</td></tr>
+    <tr><td>Group / Group ID</td><td>The audited group (audit metadata on every row)</td></tr>
+    <tr><td>Scanned at (UTC)</td><td>ISO timestamp of the scan</td></tr>
+    <tr><td>Site</td><td>Your Jira site URL</td></tr>
+    <tr><td>Scan status</td><td><code>Complete</code>, <code>Complete (see coverage notes)</code>, or <code>INCOMPLETE — n checks failed</code></td></tr>
+  </table>
+  </div>
+  <p>
+    If any check failed, the filename carries an <code>-INCOMPLETE</code> suffix and
+    each failure appears as a “Scan error” row.
+  </p>
+
+  <h2>4. Permissions &amp; security</h2>
+  <ul>
+    <li>All scopes are granular <strong>read-only</strong> scopes — deliberately not
+      the broad “Administer Jira” permission. The app cannot change or delete anything.</li>
+    <li>No storage, no egress, no analytics: the app runs entirely on Atlassian
+      infrastructure (<em>Runs on Atlassian</em>) and your data never leaves your instance.
+      Details: <a href="../privacy.html">privacy policy</a>.</li>
+    <li>Every request is additionally checked server-side for the caller’s
+      ADMINISTER permission and (for paid installs) an active license.</li>
+  </ul>
+
+  <h2>5. Troubleshooting</h2>
+  <h3>“Incomplete scan” banner</h3>
+  <p>
+    One or more checks could not finish — usually Jira rate limiting on very large
+    instances or a transient Jira error. The failed checks are listed in the banner
+    and as “Scan error” rows in the CSV. <strong>Fix:</strong> run the scan again
+    (off-peak hours help on big sites). Never act on an incomplete report alone.
+  </p>
+  <h3>“Could not verify permissions”</h3>
+  <p>Jira was temporarily unavailable while checking your admin permission. Retry in a moment.</p>
+  <h3>“No active license”</h3>
+  <p>The trial or subscription is inactive. A Jira admin can manage it under <em>Apps → Manage apps</em>.</p>
+  <h3>“The site URL could not be determined”</h3>
+  <p>Reload the page. Result links and the CSV link column need the site URL; everything else works without it.</p>
+  <h3>Scan is slow on a large site</h3>
+  <p>
+    The app scans sequentially with rate-limit-aware backoff on purpose, so it never
+    degrades your instance. Hundreds of projects can take a few minutes — the
+    progress checklist shows where it is.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    Anything unclear or broken? <a href="../support/">Support page</a> ·
+    <a href="mailto:kontakt@arbeitstyp.de">kontakt@arbeitstyp.de</a>
+  </p>
+</main>
+<footer>
+  <a href="../">Group Audit for Jira</a> · <a href="../support/">Support</a> ·
+  <a href="../privacy.html">Privacy policy</a> ·
+  Jira is a trademark of Atlassian Pty Ltd. This app is not affiliated with or endorsed by Atlassian.
+</footer>
+</body>
+</html>
