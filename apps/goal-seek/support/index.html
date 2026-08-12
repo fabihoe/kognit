@@ -50,6 +50,14 @@
       original cell content — nothing is lost.</li>
     <li><strong>Daily limit:</strong> the free plan includes 5 runs per day,
       resetting at midnight Central European Time.</li>
+    <li><strong>ARRAYFORMULA cells:</strong> if the variable cell is filled by
+      an <code>ARRAYFORMULA</code> spilling from another cell, writing into it
+      blocks the array (Sheets shows a #REF! at the array's anchor). Restore
+      the original value and the array comes back. Pick the array's source
+      cell — or a plain input cell — as the variable instead.</li>
+    <li><strong>Structural edits during a run:</strong> avoid inserting or
+      deleting rows/columns while a run is active — cells are tracked by
+      position, so structural edits can shift which cell is written to.</li>
   </ul>
 
   <h2>What to include in a bug report</h2>

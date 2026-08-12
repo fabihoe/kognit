@@ -91,9 +91,22 @@
     <li>The variable cell should contain a plain value. If it contains a
       formula, the add-on asks for confirmation first and restores the formula
       if you don't keep the result.</li>
+    <li>Don't point the variable cell at a cell that is filled by an
+      <code>ARRAYFORMULA</code> spilling from elsewhere: writing into a spill
+      range blocks the array. (Restoring afterwards un-blocks it; the same
+      applies to every Goal Seek tool for Sheets.)</li>
   </ul>
 
+  <h2>Learn more</h2>
+  <p>
+    New to the technique? Read our guide:
+    <a href="how-to-goal-seek-in-google-sheets/">How to do Goal Seek in Google
+    Sheets</a> — three ways compared, with worked break-even and savings
+    examples and a troubleshooting section.
+  </p>
+
   <p class="links">
+    <a href="how-to-goal-seek-in-google-sheets/">Tutorial</a>
     <a href="privacy.html">Privacy policy</a>
     <a href="support/">Support</a>
     <a href="mailto:kontakt@arbeitstyp.de">kontakt@arbeitstyp.de</a>

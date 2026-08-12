@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Do Goal Seek in Google Sheets (3 Ways, With Examples)</title>
+<meta name="description" content="Google Sheets has no built-in Goal Seek menu — but you can still backsolve any formula. Three ways compared: by hand, Google's official add-on, and a fast private alternative, with worked break-even and savings examples.">
+<link rel="canonical" href="https://arbeitstyp.de/apps/goal-seek/how-to-goal-seek-in-google-sheets/">
+<style>
+  :root { --text:#1c1e21; --muted:#5c6066; --bg:#ffffff; --panel:#f5f6f7; --border:#e0e2e5; --accent:#188038; }
+  @media (prefers-color-scheme: dark) {
+    :root { --text:#d6d7d9; --muted:#9a9da3; --bg:#1b1c1e; --panel:#242628; --border:#3a3d40; --accent:#5bb974; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); line-height:1.65; }
+  main { max-width:720px; margin:0 auto; padding:48px 20px 64px; }
+  h1 { font-size:1.75rem; margin:0 0 4px; line-height:1.3; }
+  .meta { color:var(--muted); font-size:0.9rem; margin:0 0 28px; }
+  h2 { font-size:1.25rem; margin:34px 0 8px; }
+  h3 { font-size:1.05rem; margin:22px 0 6px; }
+  ul, ol { padding-left:20px; margin:8px 0; }
+  li { margin:6px 0; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  .panel { background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin:18px 0; }
+  code { background:var(--panel); border:1px solid var(--border); border-radius:4px; padding:1px 5px; font-size:0.9em; }
+  table { border-collapse:collapse; margin:12px 0; width:100%; max-width:420px; }
+  th, td { border:1px solid var(--border); padding:6px 10px; text-align:left; font-size:0.95rem; }
+  th { background:var(--panel); }
+  td:last-child, th:last-child { text-align:right; }
+  .cta { background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:8px; padding:16px 18px; margin:26px 0; }
+  footer { max-width:720px; margin:0 auto; padding:20px 20px 40px; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Do Goal Seek in Google Sheets (3 Ways, With Examples)",
+  "description": "Google Sheets has no built-in Goal Seek menu — three practical ways to backsolve any formula, with worked examples and troubleshooting.",
+  "datePublished": "2026-08-12",
+  "dateModified": "2026-08-12",
+  "author": { "@type": "Person", "name": "Fabian Hönes" },
+  "mainEntityOfPage": "https://arbeitstyp.de/apps/goal-seek/how-to-goal-seek-in-google-sheets/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does Google Sheets have a built-in Goal Seek?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Unlike Excel (Data → What-If Analysis → Goal Seek), Google Sheets has no Goal Seek in its menus. You need an add-on from the Google Workspace Marketplace, or you solve manually." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Goal Seek in Google Sheets free?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Google's official Goal Seek add-on is free, and the Goal Seek – Fast & Private add-on has a free plan with 5 runs per day." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does Goal Seek fail on SUMIFS or FLOOR formulas?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Formulas like SUMIFS, FLOOR or lookup buckets change in steps, so no input hits the target exactly. A solver can only find the closest achievable value — a good one detects the step and tells you, instead of reporting a generic convergence error." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can Goal Seek change more than one cell at once?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No — Goal Seek varies exactly one input cell. If you need several inputs optimized at once, you need a solver/optimizer add-on with an objective function and constraints instead." }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <h1>How to Do Goal Seek in Google Sheets</h1>
+  <p class="meta">Updated August 2026 · 8 min read ·
+    <a href="../index.html">Goal Seek – Fast &amp; Private</a></p>
+
+  <p><strong>Goal Seek answers the backwards question:</strong> you know the
+  result you want a formula to produce — what input gets you there? What price
+  makes profit exactly zero? What monthly return turns your savings plan into
+  40,000&nbsp;€? What score do you need on the final exam?</p>
+
+  <div class="panel">
+    <strong>The short answer:</strong> Google Sheets has <em>no built-in</em>
+    Goal Seek (Excel does, under <em>Data → What-If Analysis</em>). In Sheets
+    you have three options:
+    <ol>
+      <li><a href="#manual">Solve it manually</a> — fine for simple formulas</li>
+      <li><a href="#google-addon">Google's official Goal Seek add-on</a> — free, but slow and aging</li>
+      <li><a href="#fast-private">Goal Seek – Fast &amp; Private</a> — a modern alternative that only touches the sheet you run it in</li>
+    </ol>
+  </div>
+
+  <h2 id="example">The example we'll use: a break-even price</h2>
+  <p>Say you sell a product and want to know the price at which you stop losing
+  money:</p>
+  <table>
+    <tr><th></th><th>A</th><th>B</th></tr>
+    <tr><td><strong>1</strong></td><td>Units sold</td><td>400</td></tr>
+    <tr><td><strong>2</strong></td><td>Price</td><td>49.00</td></tr>
+    <tr><td><strong>3</strong></td><td>Variable cost / unit</td><td>31.00</td></tr>
+    <tr><td><strong>4</strong></td><td>Fixed costs</td><td>9,000</td></tr>
+    <tr><td><strong>5</strong></td><td>Profit</td><td>=B1*(B2−B3)−B4</td></tr>
+  </table>
+  <p>At a price of 49.00 the profit formula shows <strong>−1,800</strong>. The
+  goal: set <strong>B5 to 0</strong> by changing <strong>B2</strong>. (The
+  answer is 53.50 — let's get Sheets to find it.)</p>
+
+  <h2 id="manual">Way 1: Solve it manually</h2>
+  <p>For formulas you can rearrange, you don't need any tool. Break-even price
+  is simple algebra:</p>
+  <p><code>=B3 + B4/B1</code> → 31 + 9000/400 = <strong>53.50</strong></p>
+  <p>The manual route breaks down when the formula chain is too tangled to
+  invert — nested taxes and discounts, compound interest, IF-logic, anything
+  built from several sheets. Then you either try values by hand (tedious) or
+  let a solver iterate for you.</p>
+
+  <h2 id="google-addon">Way 2: Google's official Goal Seek add-on</h2>
+  <ol>
+    <li>Extensions → Add-ons → Get add-ons, search for “Goal Seek”, install
+      Google's own add-on.</li>
+    <li>Extensions → Goal Seek → Open, then choose the target cell, target
+      value and the cell to change.</li>
+    <li>Click <em>Solve</em>.</li>
+  </ol>
+  <p>It's free and made by Google — for a formula like our break-even example
+  it will get there. Be aware of its trade-offs, though: it was last updated in
+  2023, it requests access to <em>all</em> your spreadsheets, and its reviews
+  regularly report runs of 20+ seconds and convergence errors on stepped
+  formulas such as SUMIFS. If it works for you, keep it — if it feels slow or
+  fails on your model, the next option was built exactly for those cases.</p>
+
+  <h2 id="fast-private">Way 3: Goal Seek – Fast &amp; Private</h2>
+  <p><a href="../index.html">Goal Seek – Fast &amp; Private</a> is our take on
+  the same idea, designed around the three complaints above:</p>
+  <ul>
+    <li><strong>Fast:</strong> a bracketing solver that typically needs only a
+      handful of recalculations — most seeks finish in a few seconds.</li>
+    <li><strong>Private:</strong> it can only access the spreadsheet you run it
+      in (<code>spreadsheets.currentonly</code> scope) — not your Drive, not
+      your other files. No external servers.</li>
+    <li><strong>Honest:</strong> if there is no solution it says so, shows what
+      it tested and the closest value it found. Stepped formulas (SUMIFS,
+      FLOOR, lookup buckets) are detected and reported with the best
+      achievable value instead of a cryptic error.</li>
+  </ul>
+  <p>Using it on the example:</p>
+  <ol>
+    <li>Open <em>Extensions → Goal Seek → Open Goal Seek</em>.</li>
+    <li><em>Set cell:</em> B5 — <em>To value:</em> 0 — <em>By changing
+      cell:</em> B2 (the sidebar prefills from your selection).</li>
+    <li>Press <em>Seek goal</em>. You'll see live progress and an iteration
+      log; the result card shows old → new value, deviation and time.</li>
+    <li>Keep the solution — or restore the original value with one click. The
+      original cell content is backed up before the first write, so a failed or
+      cancelled run never damages your sheet.</li>
+  </ol>
+
+  <div class="cta">
+    <strong>Try it:</strong> <a href="../index.html">Goal Seek – Fast &amp;
+    Private for Google Sheets</a> — free for 5 runs a day, German and English
+    UI, dark mode included.
+  </div>
+
+  <h2 id="example2">A second example: what return does your savings plan need?</h2>
+  <p>Some questions have no algebraic shortcut. Suppose you save 250&nbsp;€ per
+  month for 10 years and want to end up with 40,000&nbsp;€:</p>
+  <table>
+    <tr><th></th><th>A</th><th>B</th></tr>
+    <tr><td><strong>1</strong></td><td>Monthly deposit</td><td>250</td></tr>
+    <tr><td><strong>2</strong></td><td>Months</td><td>120</td></tr>
+    <tr><td><strong>3</strong></td><td>Monthly return</td><td>0.30%</td></tr>
+    <tr><td><strong>4</strong></td><td>Final value</td><td>=B1*((1+B3)^B2−1)/B3</td></tr>
+  </table>
+  <p>Goal Seek: set <strong>B4 to 40,000</strong> by changing
+  <strong>B3</strong>. The solver lands at roughly <strong>0.46% per month</strong>
+  (about 5.7% per year) — a number you can't cleanly isolate with algebra,
+  found in a few seconds of iteration.</p>
+
+  <h2 id="troubleshooting">Troubleshooting: when Goal Seek "doesn't work"</h2>
+  <ul>
+    <li><strong>“No sign change found”</strong> — across everything the solver
+      tested, your formula never crossed the target value. Often the goal is
+      simply unreachable (a squared term can't go negative), or the search
+      needs a hint: set a different start value or bounds.</li>
+    <li><strong>The formula moves in steps</strong> — SUMIFS over brackets,
+      FLOOR/CEILING, tiered lookup tables. No input hits the target exactly;
+      a good solver offers the closest achievable value and says why.</li>
+    <li><strong>The target cell shows an error</strong> (#DIV/0!, #N/A) for
+      some inputs — the solver has to navigate around those regions; if the
+      error appears for <em>every</em> input, fix the formula first.</li>
+    <li><strong>Nothing changes</strong> — check that the target formula really
+      depends on the cell you're varying (trace the chain; a hard-coded number
+      somewhere in between is the usual culprit).</li>
+    <li><strong>The target cell contains a value, not a formula</strong> — Goal
+      Seek needs a formula to recalculate. Point it at the formula cell.</li>
+  </ul>
+
+  <h2 id="faq">FAQ</h2>
+  <h3>Does Google Sheets have a built-in Goal Seek?</h3>
+  <p>No. Excel ships Goal Seek under <em>Data → What-If Analysis</em>; Google
+  Sheets requires an add-on (or manual solving).</p>
+  <h3>Is Goal Seek in Google Sheets free?</h3>
+  <p>Yes — Google's add-on is free, and Goal Seek – Fast &amp; Private includes
+  a free plan (5 runs per day, resets at midnight Central European Time).</p>
+  <h3>Can Goal Seek change several cells at once?</h3>
+  <p>No. Goal Seek varies exactly one input. For multiple inputs plus
+  constraints you want an optimizer (e.g. a linear-programming solver), which
+  is a different class of tool.</p>
+  <h3>Is my data safe with a Goal Seek add-on?</h3>
+  <p>Check the permissions at install time. Google's own add-on asks for access
+  to all your spreadsheets; Goal Seek – Fast &amp; Private deliberately uses
+  the restricted <code>spreadsheets.currentonly</code> permission, which covers
+  only the file you run it in, and sends nothing to external servers — see the
+  <a href="../privacy.html">privacy policy</a>.</p>
+
+  <p class="meta" style="margin-top:36px">
+    <a href="../index.html">← Goal Seek – Fast &amp; Private for Google Sheets</a>
+  </p>
+</main>
+<footer>
+  Written by Fabian Hönes · <a href="https://arbeitstyp.de/impressum.html">Impressum</a> ·
+  <a href="../support/">Support</a> ·
+  Google Sheets™ and Excel are trademarks of their respective owners. This site
+  is not affiliated with or endorsed by Google or Microsoft.
+</footer>
+</body>
+</html>
