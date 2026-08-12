@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Goal Seek for Google Sheets — Fast &amp; Private</title>
+<meta name="description" content="A fast, honest Goal Seek sidebar for Google Sheets: solves in seconds, restores your cell on cancel or failure, and touches only the spreadsheet you run it in.">
+<style>
+  :root { --text:#1c1e21; --muted:#5c6066; --bg:#ffffff; --panel:#f5f6f7; --border:#e0e2e5; --accent:#188038; }
+  @media (prefers-color-scheme: dark) {
+    :root { --text:#d6d7d9; --muted:#9a9da3; --bg:#1b1c1e; --panel:#242628; --border:#3a3d40; --accent:#5bb974; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); line-height:1.65; }
+  main { max-width:720px; margin:0 auto; padding:48px 20px 64px; }
+  h1 { font-size:1.8rem; margin:0 0 4px; }
+  .tagline { color:var(--muted); font-size:1.05rem; margin:0 0 28px; }
+  h2 { font-size:1.15rem; margin:30px 0 8px; }
+  ul { padding-left:20px; margin:8px 0; }
+  li { margin:6px 0; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  .panel { background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin:18px 0; }
+  .links { margin-top:34px; }
+  .links a { margin-right:18px; }
+  footer { max-width:720px; margin:0 auto; padding:20px 20px 40px; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Goal Seek for Google Sheets</h1>
+  <p class="tagline">Fast &amp; private what-if analysis: pick a formula cell, a target
+  value and a cell to change — get the answer in seconds.</p>
+
+  <div class="panel">
+    <strong>Privacy first:</strong> the add-on requests access to
+    <em>only the spreadsheet you run it in</em> (the non-sensitive
+    <code>spreadsheets.currentonly</code> scope). No external servers, no
+    tracking, no data ever leaves Google Sheets.
+    Details in the <a href="privacy.html">privacy policy</a>.
+  </div>
+
+  <h2>Why this one</h2>
+  <ul>
+    <li><strong>Fast.</strong> A secant-guided bracketing solver typically needs
+      only a handful of recalculations — most seeks finish in a few seconds
+      instead of half a minute.</li>
+    <li><strong>Honest results.</strong> If no solution exists, it says so and
+      shows what it tested and the closest value it found — no cryptic
+      convergence errors. Staircase formulas (SUMIFS, FLOOR, lookup buckets) are
+      detected and reported with the best achievable value.</li>
+    <li><strong>Undo-safe by design.</strong> The original content of your
+      variable cell (value <em>or formula</em>, dates and formats included) is
+      backed up before the first write and restored on cancel, on failure and
+      even after an interrupted run — the sidebar offers the restore when you
+      come back.</li>
+    <li><strong>Made for real spreadsheets.</strong> Prefills from your
+      selection, remembers your last inputs per file, understands your locale's
+      number format ("1.234,5" and "1,234.5"), live progress with an iteration
+      log and a working cancel button. Full German and English UI, dark mode,
+      screen-reader friendly.</li>
+    <li><strong>Advanced controls</strong> when you need them: tolerance,
+      search bounds, starting value and evaluation limit.</li>
+  </ul>
+
+  <h2>How to use it</h2>
+  <ul>
+    <li>Install from the Google Workspace Marketplace, then open
+      <em>Extensions → Goal Seek → Open Goal Seek</em>.</li>
+    <li>Choose the <strong>target cell</strong> (must contain a formula), the
+      <strong>target value</strong>, and the <strong>variable cell</strong> the
+      formula depends on.</li>
+    <li>Press <em>Seek goal</em>. Keep the solution or restore the original
+      value with one click.</li>
+  </ul>
+
+  <h2>Free plan</h2>
+  <p>
+    Goal Seek is free for up to 5 runs per day — generous for occasional
+    what-if questions. The daily counter resets at midnight Central European
+    Time.
+  </p>
+
+  <h2>Notes &amp; limitations</h2>
+  <ul>
+    <li>Each iteration recalculates your sheet, so very heavy spreadsheets make
+      each step slower — the progress bar keeps you informed either way.</li>
+    <li>Avoid inserting or deleting rows/columns while a run is active: cells
+      are tracked by position, so structural edits during a run can shift which
+      cell is written to.</li>
+    <li>The variable cell should contain a plain value. If it contains a
+      formula, the add-on asks for confirmation first and restores the formula
+      if you don't keep the result.</li>
+  </ul>
+
+  <p class="links">
+    <a href="privacy.html">Privacy policy</a>
+    <a href="support/">Support</a>
+    <a href="mailto:kontakt@arbeitstyp.de">kontakt@arbeitstyp.de</a>
+  </p>
+</main>
+<footer>
+  Operated by Fabian Hönes · <a href="https://arbeitstyp.de/impressum.html">Impressum</a> ·
+  Google Sheets™ and Google Workspace Marketplace™ are trademarks of Google LLC.
+  This add-on is not affiliated with or endorsed by Google.
+</footer>
+</body>
+</html>
