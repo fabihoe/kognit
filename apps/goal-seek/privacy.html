@@ -26,13 +26,15 @@
 <body>
 <main>
   <h1>Privacy Policy — Goal Seek for Google Sheets</h1>
-  <p class="meta">Effective date: 12 August 2026</p>
+  <p class="meta">Effective date: 13 August 2026 · Last updated: 13 August 2026</p>
 
   <div class="panel">
     <strong>Summary:</strong> Goal Seek runs entirely inside Google Sheets, in the
     one spreadsheet you open it in. It has no external servers, makes no network
     requests, uses no analytics and no cookies. No spreadsheet data — personal or
-    otherwise — is ever transmitted to us or to any third party.
+    otherwise — is ever transmitted to us or to any third party. All data stays
+    inside your Google account, protected by Google's encryption in transit and
+    at rest (see section 6).
   </div>
 
   <h2>1. Who we are</h2>
@@ -42,11 +44,30 @@
     For the data the add-on processes inside your spreadsheet we are
     <strong>neither a data controller nor a data processor</strong> — that data is
     processed entirely within your Google account and never reaches us
-    (sections 2–4). We act as a data controller only for support correspondence
-    you choose to send us directly (section 5).
+    (sections 2–6). We act as a data controller only for support correspondence
+    you choose to send us directly (section 10).
   </p>
 
-  <h2>2. What the add-on does with data</h2>
+  <h2>2. Google user data the add-on accesses</h2>
+  <p>The add-on requests exactly two OAuth scopes — the minimum required for its
+    single function:</p>
+  <p>
+    <code>…/auth/spreadsheets.currentonly</code> — read and modify
+    <em>only the spreadsheet this add-on is used in</em>. The add-on cannot see
+    any of your other files.<br>
+    <code>…/auth/script.container.ui</code> — show its sidebar inside Google
+    Sheets. Google classifies this scope as <em>sensitive</em>; it displays the
+    add-on's user interface and grants no access to your data by itself.
+  </p>
+  <p>
+    Through these scopes the add-on accesses: the value and formula of the target
+    cell and the variable cell you select, the recalculated values during the
+    search, and the sidebar form inputs you type. It accesses nothing else — not
+    your other spreadsheets, not your Drive, not your contacts, not your email,
+    not your account profile.
+  </p>
+
+  <h2>3. How that data is used</h2>
   <p>
     When you run a goal seek, the add-on reads the value of the target cell and
     of the variable cell you selected, writes trial values into that
@@ -55,34 +76,103 @@
     content of the variable cell into the spreadsheet's own document properties,
     so it can always be restored — after a cancel, an error, or an interrupted
     run. It also remembers your last form inputs per spreadsheet, so the sidebar
-    can prefill them next time.
-  </p>
-  <p>
-    All of this happens <strong>inside Google's infrastructure, inside the one
-    spreadsheet the add-on runs in</strong>. Nothing is copied to any system
-    outside your Google account.
+    can prefill them next time. That is the <strong>only</strong> use of the
+    data — providing the goal-seek feature you invoked. There is no secondary
+    use of any kind.
   </p>
 
-  <h2>3. Permissions (OAuth scopes)</h2>
-  <p>The add-on requests exactly two scopes, both non-sensitive:</p>
+  <h2>4. Where data is stored, and for how long (retention)</h2>
   <p>
-    <code>…/auth/spreadsheets.currentonly</code> — read and modify
-    <em>only the spreadsheet this add-on is used in</em>. The add-on cannot see
-    any of your other files.<br>
-    <code>…/auth/script.container.ui</code> — show its sidebar inside Google
-    Sheets.
+    All processing happens <strong>inside Google's infrastructure, inside the one
+    spreadsheet the add-on runs in</strong>, executed by Google Apps Script under
+    your own Google account. Nothing is copied to any system outside your Google
+    account. We — the developer — operate no servers and no databases, and we
+    never see, receive, store or retain any of your spreadsheet data.
+  </p>
+  <p>
+    The only data the add-on persists are (a) the saved original value of the
+    variable cell and (b) your last sidebar inputs — both stored in the
+    spreadsheet's own document properties, which live inside that spreadsheet in
+    your Google account. They are retained only as long as the spreadsheet
+    exists: deleting the spreadsheet deletes them, and section 9 describes how to
+    remove them earlier. Because no data ever reaches us, our own retention
+    period for Google user data is <strong>zero</strong>.
   </p>
 
-  <h2>4. What the add-on does not do</h2>
+  <h2>5. Sharing of Google user data</h2>
   <p>
-    The add-on has no backend servers, makes <strong>no network requests to any
-    external system</strong> (no egress), and does not use cookies, analytics,
-    tracking or advertising of any kind. It cannot access other spreadsheets,
-    your Drive, your contacts or your email. We — the developer — never see,
-    receive or store any of your data.
+    We do <strong>not</strong> share, transfer, sell or disclose Google user data
+    to anyone — no third parties, no service providers, no advertisers, no data
+    brokers. Technically we could not even do so, because the data never leaves
+    your Google account. The add-on makes no network requests to any external
+    system (no egress) and uses no cookies, analytics, tracking or advertising of
+    any kind.
   </p>
 
-  <h2>5. Support requests</h2>
+  <h2>6. Data protection mechanisms</h2>
+  <p>We protect the data the add-on touches with the following mechanisms:</p>
+  <p>
+    <strong>Encryption in transit.</strong> All communication between your
+    browser, the add-on's sidebar and Google's servers uses HTTPS/TLS,
+    enforced by Google's infrastructure. The add-on itself opens no other
+    connections.<br>
+    <strong>Encryption at rest.</strong> Everything the add-on reads or writes
+    (cell values, document properties) is stored in Google Sheets and is
+    encrypted at rest by Google as described in
+    <a href="https://cloud.google.com/docs/security/encryption/default-encryption" rel="noopener">Google's default encryption documentation</a>.<br>
+    <strong>Data minimization &amp; least privilege.</strong> The add-on requests
+    the narrowest available scopes (section 2): it can only touch the spreadsheet
+    it runs in, and only while you use it. It reads only the cells involved in
+    the goal-seek you configure.<br>
+    <strong>No external attack surface.</strong> With no servers, no database and
+    no egress, there is no system of ours that could be breached to expose your
+    data. Sandboxing and isolation of the Apps Script runtime are provided and
+    maintained by Google.<br>
+    <strong>Access control on the developer side.</strong> The developer account
+    that publishes the add-on is protected by strong authentication (two-factor
+    authentication). No mechanism exists by which the developer can read user
+    spreadsheets through the add-on.<br>
+    <strong>Change control.</strong> The add-on ships as reviewed, versioned
+    releases through the Google Workspace Marketplace. Any future change to the
+    requested scopes would trigger a new Google review and a new consent screen —
+    the add-on's access cannot silently expand.<br>
+    <strong>Incident response.</strong> In the unlikely event of a security
+    incident affecting user data, we will notify affected users and the relevant
+    authorities without undue delay, in accordance with Art. 33/34 GDPR.
+  </p>
+
+  <h2>7. No AI/ML training (Workspace API disclosure)</h2>
+  <p>
+    We do not retain or use any data obtained through Google Workspace APIs to
+    develop, improve or train generalized (non-personalized) artificial
+    intelligence or machine-learning models. The add-on contains no AI
+    components; it is a deterministic numerical solver.
+  </p>
+
+  <h2>8. Limited Use</h2>
+  <p>
+    Goal Seek's use of information received from Google APIs adheres to the
+    <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>,
+    including the Limited Use requirements, and to the
+    <a href="https://developers.google.com/workspace/marketplace/terms/policies" rel="noopener">Google Workspace Marketplace program policies</a>.
+    In short: data accessed via the scopes above is used only to provide the
+    user-facing goal-seek feature, and is never transferred, sold, used for
+    advertising, or used to train AI/ML models.
+  </p>
+
+  <h2>9. Revoking access and deleting data</h2>
+  <p>
+    You can revoke the add-on's access at any time at
+    <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>
+    or uninstall it via <em>Extensions → Add-ons → Manage add-ons</em> in Google
+    Sheets — the add-on then loses all access immediately. The small amount of
+    data stored in a spreadsheet's document properties (section 4) is removed by
+    deleting the spreadsheet, and it never leaves that file. Because we hold no
+    copy of your data, there is nothing further for us to delete; if you have
+    any doubt, contact us (section 10) and we will confirm this for your case.
+  </p>
+
+  <h2>10. Support requests</h2>
   <p>
     If you contact us at <a href="mailto:kontakt@arbeitstyp.de">kontakt@arbeitstyp.de</a>,
     we use your email address and the content of your message solely to answer
@@ -91,7 +181,7 @@
     retention is legally required.
   </p>
 
-  <h2>6. Your rights</h2>
+  <h2>11. Your rights</h2>
   <p>
     Under the GDPR you have the rights of access, rectification, erasure,
     restriction, data portability and objection regarding personal data we
@@ -100,7 +190,7 @@
     any request, contact <a href="mailto:kontakt@arbeitstyp.de">kontakt@arbeitstyp.de</a>.
   </p>
 
-  <h2>7. Google's role</h2>
+  <h2>12. Google's role</h2>
   <p>
     The add-on runs on Google Apps Script, inside Google Workspace. Google's
     processing of your data is governed by the
@@ -108,7 +198,7 @@
     and your agreements with Google.
   </p>
 
-  <h2>8. Changes</h2>
+  <h2>13. Changes</h2>
   <p>
     If the add-on ever changes in a way that affects data handling, this policy
     will be updated before the change ships, with a new effective date.
