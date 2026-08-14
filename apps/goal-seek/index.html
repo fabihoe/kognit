@@ -21,6 +21,9 @@
   a { color:var(--accent); text-decoration:none; }
   a:hover { text-decoration:underline; }
   .panel { background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin:18px 0; }
+  .btn { display:inline-block; background:var(--accent); color:var(--bg); font-weight:600; padding:10px 18px; border-radius:8px; margin:2px 0; }
+  .btn:hover { text-decoration:none; opacity:0.9; }
+  .btn-note { color:var(--muted); font-size:0.85rem; margin:6px 0 0; }
   .links { margin-top:34px; }
   .links a { margin-right:18px; }
   footer { max-width:720px; margin:0 auto; padding:20px 20px 40px; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); }
@@ -31,6 +34,13 @@
   <h1>Goal Seek for Google Sheets</h1>
   <p class="tagline">Fast &amp; private what-if analysis: pick a formula cell, a target
   value and a cell to change — get the answer in seconds.</p>
+
+  <p>
+    <a class="btn" data-track="gs-install-app-hero" target="_blank" rel="noopener"
+       href="https://workspace.google.com/marketplace/app/goal_seek_%E2%80%93_fast_private/640557799458">Install
+       from the Google Workspace Marketplace</a>
+  </p>
+  <p class="btn-note">Free — up to 5 runs per day, no sign-up beyond your Google account.</p>
 
   <div class="panel">
     <strong>Privacy first:</strong> the add-on requests access to
@@ -65,7 +75,9 @@
 
   <h2>How to use it</h2>
   <ul>
-    <li>After installing the add-on, open
+    <li><a data-track="gs-install-app-howto" target="_blank" rel="noopener"
+      href="https://workspace.google.com/marketplace/app/goal_seek_%E2%80%93_fast_private/640557799458">Install
+      from the Google Workspace Marketplace</a>, then open
       <em>Extensions → Goal Seek → Open Goal Seek</em>.</li>
     <li>Choose the <strong>target cell</strong> (must contain a formula), the
       <strong>target value</strong>, and the <strong>variable cell</strong> the
@@ -106,6 +118,8 @@
   </p>
 
   <p class="links">
+    <a data-track="gs-install-app-links" target="_blank" rel="noopener"
+       href="https://workspace.google.com/marketplace/app/goal_seek_%E2%80%93_fast_private/640557799458">Install</a>
     <a href="how-to-goal-seek-in-google-sheets/">Tutorial</a>
     <a href="privacy.html">Privacy policy</a>
     <a href="support/">Support</a>
@@ -114,8 +128,26 @@
 </main>
 <footer>
   Operated by Fabian Hönes · <a href="https://arbeitstyp.de/impressum.html">Impressum</a> ·
-  Google Sheets™ is a trademark of Google LLC.
+  Google Sheets™ and Google Workspace Marketplace™ are trademarks of Google LLC.
   This add-on is not affiliated with or endorsed by Google.
 </footer>
+<script>
+'use strict';
+(function () {
+  var GC = 'https://arbeitstyp.goatcounter.com/count';
+  var links = document.querySelectorAll('a[data-track]');
+  for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('click', function () {
+      try {
+        var u = new URL(GC);
+        u.searchParams.set('p', '/' + this.getAttribute('data-track'));
+        u.searchParams.set('t', this.getAttribute('data-track'));
+        u.searchParams.set('rnd', String(Date.now()));
+        new Image().src = u.toString();
+      } catch (e) {}
+    });
+  }
+})();
+</script>
 </body>
 </html>

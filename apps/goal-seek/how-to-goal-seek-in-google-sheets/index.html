@@ -38,7 +38,7 @@
   "headline": "How to Do Goal Seek in Google Sheets (3 Ways, With Examples)",
   "description": "Google Sheets has no built-in Goal Seek menu — three practical ways to backsolve any formula, with worked examples and troubleshooting.",
   "datePublished": "2026-08-12",
-  "dateModified": "2026-08-12",
+  "dateModified": "2026-08-14",
   "author": { "@type": "Person", "name": "Fabian Hönes" },
   "mainEntityOfPage": "https://arbeitstyp.de/apps/goal-seek/how-to-goal-seek-in-google-sheets/"
 }
@@ -149,6 +149,10 @@
   </ul>
   <p>Using it on the example:</p>
   <ol>
+    <li><a data-track="gs-install-tutorial-steps" target="_blank" rel="noopener"
+      href="https://workspace.google.com/marketplace/app/goal_seek_%E2%80%93_fast_private/640557799458">Install
+      Goal Seek – Fast &amp; Private</a> from the Google Workspace Marketplace
+      (free, takes under a minute).</li>
     <li>Open <em>Extensions → Goal Seek → Open Goal Seek</em>.</li>
     <li><em>Set cell:</em> B5 — <em>To value:</em> 0 — <em>By changing
       cell:</em> B2 (the sidebar prefills from your selection).</li>
@@ -160,9 +164,11 @@
   </ol>
 
   <div class="cta">
-    <strong>Try it:</strong> <a href="../index.html">Goal Seek – Fast &amp;
-    Private for Google Sheets</a> — free for 5 runs a day, German and English
-    UI, dark mode included.
+    <strong>Try it:</strong> <a data-track="gs-install-tutorial-cta" target="_blank" rel="noopener"
+    href="https://workspace.google.com/marketplace/app/goal_seek_%E2%80%93_fast_private/640557799458">install
+    Goal Seek – Fast &amp; Private from the Google Workspace Marketplace</a> —
+    free for 5 runs a day, German and English UI, dark mode included.
+    <a href="../index.html">Learn more about the add-on.</a>
   </div>
 
   <h2 id="example2">A second example: what return does your savings plan need?</h2>
@@ -224,8 +230,27 @@
 <footer>
   Written by Fabian Hönes · <a href="https://arbeitstyp.de/impressum.html">Impressum</a> ·
   <a href="../support/">Support</a> ·
-  Google Sheets™ and Excel are trademarks of their respective owners. This site
-  is not affiliated with or endorsed by Google or Microsoft.
+  Google Sheets™, Google Workspace Marketplace™ and Excel are trademarks of
+  their respective owners. This site is not affiliated with or endorsed by
+  Google or Microsoft.
 </footer>
+<script>
+'use strict';
+(function () {
+  var GC = 'https://arbeitstyp.goatcounter.com/count';
+  var links = document.querySelectorAll('a[data-track]');
+  for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('click', function () {
+      try {
+        var u = new URL(GC);
+        u.searchParams.set('p', '/' + this.getAttribute('data-track'));
+        u.searchParams.set('t', this.getAttribute('data-track'));
+        u.searchParams.set('rnd', String(Date.now()));
+        new Image().src = u.toString();
+      } catch (e) {}
+    });
+  }
+})();
+</script>
 </body>
 </html>
