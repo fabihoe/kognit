@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security &amp; Incident Response — Group Audit for Jira</title>
+<meta name="description" content="Security practices and incident response plan for Group Audit for Jira: how the app is built, how vulnerabilities are handled, and how customers and Atlassian are notified.">
+<style>
+  :root { --text:#1c1e21; --muted:#5c6066; --bg:#ffffff; --panel:#f5f6f7; --border:#e0e2e5; --accent:#1868db; }
+  @media (prefers-color-scheme: dark) {
+    :root { --text:#d6d7d9; --muted:#9a9da3; --bg:#1b1c1e; --panel:#242628; --border:#3a3d40; --accent:#669df1; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); line-height:1.65; }
+  main { max-width:720px; margin:0 auto; padding:48px 20px 64px; }
+  h1 { font-size:1.7rem; margin:0 0 4px; }
+  .meta { color:var(--muted); font-size:0.9rem; margin:0 0 28px; }
+  h2 { font-size:1.15rem; margin:28px 0 8px; }
+  h3 { font-size:1rem; margin:18px 0 6px; }
+  ul, ol { padding-left:20px; margin:8px 0; }
+  li { margin:4px 0; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  .panel { background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin:18px 0; }
+  table { border-collapse:collapse; width:100%; margin:10px 0; font-size:0.95rem; }
+  th, td { text-align:left; padding:6px 8px; border-bottom:1px solid var(--border); vertical-align:top; }
+  th { color:var(--muted); font-weight:600; }
+  footer { max-width:720px; margin:0 auto; padding:20px 20px 40px; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Security &amp; Incident Response — Group Audit for Jira</h1>
+  <p class="meta">Version 1.0 · Effective 27 August 2026 · Applies to the Marketplace app “Group Audit for Jira (Find Where a Group Is Used)”</p>
+
+  <div class="panel">
+    <strong>Report a security issue:</strong>
+    <a href="mailto:kontakt@arbeitstyp.de?subject=SECURITY%20Group%20Audit">kontakt@arbeitstyp.de</a>
+    with “SECURITY” in the subject line. Reports are read first and acknowledged
+    within two business days.
+  </div>
+
+  <h2>1. How the app is built</h2>
+  <ul>
+    <li><strong>Runs on Atlassian.</strong> The app is a Forge app and runs entirely
+      on Atlassian’s infrastructure. There is no remote backend, no web trigger and
+      no egress permission — data never leaves the customer’s Jira site.</li>
+    <li><strong>Read-only by design.</strong> The app requests granular read scopes
+      only (no “Administer Jira” permission) and cannot change or delete anything.</li>
+    <li><strong>No storage.</strong> The app keeps no data: no Forge storage, no
+      external database, no caches outside the current request.</li>
+    <li><strong>Admin-only.</strong> Every backend call runs as the app and is guarded
+      by a server-side check that the calling user is a Jira administrator; the
+      user interface is a Jira admin page.</li>
+    <li><strong>No secrets, no credentials.</strong> The app collects no Atlassian
+      or third-party credentials and holds no API keys.</li>
+    <li><strong>Minimal logging.</strong> Application logs contain counts, booleans
+      and error classes — never group names, user data, tokens or credentials.</li>
+  </ul>
+
+  <h2>2. Secure development</h2>
+  <ul>
+    <li>Source code lives in a private Git repository with two-factor authentication
+      enforced; the developer workstation uses full-disk encryption, automatic
+      security updates and the platform’s built-in malware protection.</li>
+    <li>Dependencies are pinned and audited (<code>npm audit</code>) before every
+      production deployment; releases are blocked on unresolved critical or high
+      findings.</li>
+    <li>Every release passes static analysis (ESLint), a security review against the
+      OWASP Top 10 (input validation, regular-expression safety, injection in JQL
+      strings, least privilege) and a live end-to-end test suite on a staging site
+      before <code>forge deploy</code> to production.</li>
+    <li>Atlassian’s automated vulnerability scanning of the app is monitored through
+      the Atlassian Marketplace Security (AMS) project.</li>
+  </ul>
+
+  <h2>3. Vulnerability handling</h2>
+  <p>
+    We follow Atlassian’s
+    <a href="https://developer.atlassian.com/platform/marketplace/security-bugfix-policy/">Security Bug Fix Policy for Marketplace apps</a>.
+    Reported vulnerabilities are triaged within two business days and fixed within
+    the remediation timeframe Atlassian sets for the severity and hosting type.
+    Because the app is read-only and holds no data, most classes of vulnerability
+    are limited in impact, but every report is treated as real until proven otherwise.
+  </p>
+
+  <h2>4. Incident response plan</h2>
+  <p>
+    A security incident is any confirmed or suspected event in which the app could
+    have exposed, altered or made unavailable customer data, or in which the app’s
+    source code, build pipeline or publishing account was compromised.
+  </p>
+
+  <table>
+    <tr><th style="width:26%">Step</th><th>What happens</th><th style="width:22%">Target</th></tr>
+    <tr><td>1. Detect &amp; record</td>
+        <td>Report received (customer, Atlassian, researcher, own monitoring). Open an
+            incident record with time, source, affected versions and initial severity.</td>
+        <td>Immediately</td></tr>
+    <tr><td>2. Contain</td>
+        <td>Depending on the finding: disable the affected code path, publish a
+            hotfix version, or — if the app itself is the risk — ask Atlassian to
+            pause new installations. Rotate any credential that may be affected
+            (Forge CLI token, Git credentials, publishing account).</td>
+        <td>Within 24 hours</td></tr>
+    <tr><td>3. Notify Atlassian</td>
+        <td>Report the incident to Atlassian through the
+            <a href="https://developer.atlassian.com/platform/marketplace/app-security-incident-management-guidelines/">App security incident management</a>
+            process (Developer &amp; Marketplace Support) with scope, affected
+            versions, containment status and next update time.</td>
+        <td>Within 48 hours</td></tr>
+    <tr><td>4. Notify customers</td>
+        <td>Inform affected customers via the Marketplace listing and email (where a
+            contact is known) using Atlassian’s incident communication template:
+            what happened, what data or functionality was affected, what we did,
+            what customers should do.</td>
+        <td>Within 72 hours</td></tr>
+    <tr><td>5. Fix &amp; verify</td>
+        <td>Ship the corrected version, re-run the security review and the
+            end-to-end suite, confirm the fix on staging and production.</td>
+        <td>Per bug-fix policy</td></tr>
+    <tr><td>6. Post-incident review</td>
+        <td>Write up root cause, timeline and preventive changes; update this plan
+            and the release checklist accordingly.</td>
+        <td>Within 14 days</td></tr>
+  </table>
+
+  <h3>Roles</h3>
+  <p>
+    The app is developed and operated by a single person, who acts as product
+    owner, engineer and security contact. All incident communication comes from
+    <a href="mailto:kontakt@arbeitstyp.de">kontakt@arbeitstyp.de</a>; the same
+    contact is registered as the app’s security contact with Atlassian.
+  </p>
+
+  <h3>Communication principles</h3>
+  <ul>
+    <li>Say what is known, what is not yet known, and when the next update comes.</li>
+    <li>Never ask customers for credentials or access to their Jira site.</li>
+    <li>Do not close an incident before Atlassian and affected customers have been informed.</li>
+  </ul>
+
+  <h2>5. Business continuity</h2>
+  <p>
+    The app has no infrastructure of its own to fail: hosting, scaling and backups
+    of the runtime are Atlassian’s responsibility under the Forge platform. Source
+    code is versioned in a private Git repository (off-site copy) and can be
+    redeployed with <code>forge deploy</code> from any workstation with the
+    publishing account.
+  </p>
+
+  <h2>6. Review</h2>
+  <p>
+    This document is reviewed at every major release and at least once a year, and
+    after any incident. Changes are recorded in the version line at the top.
+  </p>
+</main>
+<footer>
+  <a href="../">Group Audit for Jira</a> · <a href="../docs/">Documentation</a> ·
+  <a href="../support/">Support</a> · <a href="../privacy.html">Privacy policy</a> ·
+  Jira is a trademark of Atlassian Pty Ltd. This app is not affiliated with or endorsed by Atlassian.
+</footer>
+</body>
+</html>
