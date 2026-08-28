@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where Is This Group Used in Jira Cloud? Every Place to Check Before You Delete a Group</title>
+<meta name="description" content="Jira Cloud cannot show you where a group is used. Here is every place a group can sit — permission schemes, project roles, notification schemes, issue security, filters, dashboards, product access, workflows, automation — what the UI and the REST API can tell you, and a checklist before you delete a group.">
+<link rel="canonical" href="https://arbeitstyp.de/apps/group-audit/where-is-a-group-used-in-jira-cloud/">
+<meta property="og:title" content="Where is this group used in Jira Cloud? Every place to check before you delete a group">
+<meta property="og:description" content="Every place a Jira Cloud group can be used, what the UI and REST API can tell you without an app, and a checklist before deleting a group.">
+<meta property="og:url" content="https://arbeitstyp.de/apps/group-audit/where-is-a-group-used-in-jira-cloud/">
+<meta property="og:type" content="article">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Where is this group used in Jira Cloud? Every place to check before you delete a group",
+  "description": "Every place a Jira Cloud group can be used, what the UI and the REST API can tell you without an app, and a checklist before deleting a group.",
+  "datePublished": "2026-08-28",
+  "dateModified": "2026-08-28",
+  "author": { "@type": "Person", "name": "Fabian Hönes" },
+  "publisher": { "@type": "Organization", "name": "Arbeitstyp", "url": "https://arbeitstyp.de/" },
+  "mainEntityOfPage": "https://arbeitstyp.de/apps/group-audit/where-is-a-group-used-in-jira-cloud/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I find where a group is used in Jira Cloud?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Jira Cloud has no per-group usage page (JRACLOUD-71967). You can check object by object in the UI (each permission scheme, notification scheme, project role page, issue security scheme, Global permissions), script it with the REST API (permissionscheme, project role, notificationscheme, issuesecurityschemes, filter/search with overrideSharePermissions=true, dashboard/search, applicationrole), or use a Marketplace app such as Group Audit for Jira that runs those checks for one group and exports a CSV." }
+    },
+    {
+      "@type": "Question",
+      "name": "What breaks if I delete a Jira group that is still in use?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Nothing throws an error. People silently stop receiving notifications, filters and dashboards shared only with that group disappear for everyone else, issues behind an issue security level become invisible, new users stop getting product access if the group was a default group, and workflow conditions referencing the group start blocking transitions." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can the Jira REST API list all filters shared with a group?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes: GET /rest/api/3/filter/search?expand=sharePermissions,editPermissions,jql,subscriptions&overrideSharePermissions=true. The overrideSharePermissions parameter (Jira admin only) is what makes the call return filters not shared with you. Check sharePermissions and editPermissions for type group, search the JQL for membersOf, and look at subscriptions." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there an API for Jira Cloud global permission grantees?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. There is no public Jira Cloud REST endpoint that returns which groups hold a global permission. The Global permissions page in Jira settings has to be checked by hand." }
+    }
+  ]
+}
+</script>
+<style>
+  :root { --text:#1c1e21; --muted:#5c6066; --bg:#ffffff; --panel:#f5f6f7; --border:#e0e2e5; --accent:#1868db; }
+  @media (prefers-color-scheme: dark) {
+    :root { --text:#d6d7d9; --muted:#9a9da3; --bg:#1b1c1e; --panel:#242628; --border:#3a3d40; --accent:#669df1; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); line-height:1.65; }
+  main { max-width:720px; margin:0 auto; padding:48px 20px 64px; }
+  h1 { font-size:1.75rem; line-height:1.25; margin:0 0 8px; }
+  .meta { color:var(--muted); font-size:0.9rem; margin:0 0 28px; }
+  h2 { font-size:1.2rem; margin:36px 0 8px; }
+  h3 { font-size:1rem; margin:22px 0 6px; }
+  ul, ol { padding-left:22px; margin:8px 0; }
+  li { margin:5px 0; }
+  p { margin:10px 0; }
+  .panel { background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin:20px 0; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:0.86em; background:var(--panel); border:1px solid var(--border); border-radius:4px; padding:1px 5px; word-break:break-all; }
+  pre { background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:12px 14px; overflow-x:auto; font-size:0.85em; line-height:1.5; }
+  pre code { background:none; border:0; padding:0; }
+  table { border-collapse:collapse; width:100%; margin:12px 0; font-size:0.92rem; }
+  th, td { text-align:left; vertical-align:top; padding:7px 8px; border-bottom:1px solid var(--border); }
+  th { color:var(--muted); font-weight:600; }
+  .tablewrap { overflow-x:auto; }
+  footer { max-width:720px; margin:0 auto; padding:20px 20px 40px; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Where is this group used in Jira Cloud? Every place to check before you delete a group</h1>
+  <p class="meta">Jira Cloud · REST API v3 · Updated 28 August 2026 · Written by the developer of <a href="../">Group Audit for Jira</a>; nothing in this guide needs the app.</p>
+
+  <h2>Why this keeps coming up</h2>
+  <p>
+    Jira Cloud shows you where a project role is used, but not where a group is used.
+    <a href="https://jira.atlassian.com/browse/JRACLOUD-71967" rel="noopener">JRACLOUD-71967</a>
+    has asked for that since 2019 and has about a thousand votes; Atlassian's last update
+    (November 2024) said it would not be built in the following 12–18 months, and that window
+    has passed. Atlassian's own
+    <a href="https://support.atlassian.com/user-management/docs/delete-a-group/" rel="noopener">Delete a group</a>
+    page says only: "Before you delete a group, check if the group is used to configure
+    permissions in any of your apps" — and gives no way to do that check.
+  </p>
+  <p>
+    So before you delete or empty a group, you are on your own, and the damage from a wrong
+    guess is quiet: people stop receiving notifications, a filter or dashboard that was shared
+    only with that group disappears for everyone else, issues behind a security level become
+    invisible, a workflow transition starts failing its condition, or new users stop getting
+    product access because the group was a default group. None of that throws an error.
+  </p>
+
+  <h2>Where a group can be used in Jira Cloud</h2>
+  <p>Inside Jira, a group can sit in any of these places:</p>
+  <ol>
+    <li><strong>Permission schemes</strong> (as a permission holder), which reach every project using the scheme</li>
+    <li><strong>Project roles</strong> — as a role actor per project, and as a default actor that gets added to every future project</li>
+    <li><strong>Notification schemes</strong> (as a recipient)</li>
+    <li><strong>Issue security levels</strong></li>
+    <li><strong>Filters</strong> — shared with the group, editable by the group, referenced in JQL via <code>membersOf("group")</code>, or with a subscription that mails the group</li>
+    <li><strong>Dashboards</strong> — shared with or editable by the group</li>
+    <li><strong>Product access</strong> — application-role groups and the default group for new users (this lives in admin.atlassian.com, not in Jira settings)</li>
+    <li><strong>Global permissions</strong> (Jira settings → System → Global permissions)</li>
+    <li><strong>Workflow conditions and validators</strong> ("user is in group"), including conditions provided by apps such as ScriptRunner or JSU</li>
+    <li><strong>Automation rule conditions</strong></li>
+    <li><strong>Board administrators</strong>, comment and worklog visibility restrictions, group-picker custom fields on issues</li>
+  </ol>
+  <p>
+    And outside Jira: Confluence space permissions and page restrictions, and other products in
+    the same organization. A group that looks unused in Jira can still be load-bearing elsewhere.
+  </p>
+
+  <h2>What the UI gives you</h2>
+  <p>
+    Object by object, yes; per group, no. You can open each permission scheme, each notification
+    scheme, each project's role page and look for the group. For a handful of projects that is
+    fine. For fifty, it is not, and filters and dashboards are not browsable that way at all.
+  </p>
+  <p>
+    One trick a commenter on the ticket describes, and which works for roles and permissions:
+    create a test account, put it in the group you want to audit and in no other group, then
+    open that user in User management and view its Jira project roles. Everything it shows came
+    through the group. It does not show filters, dashboards, notifications or subscriptions.
+  </p>
+
+  <h2>What the REST API gives you</h2>
+  <p>
+    If you script it, these are the calls (Jira Cloud REST API v3, run as a Jira admin with an
+    API token). Everything is paginated (<code>startAt</code> / <code>maxResults</code>), and a
+    large site will take hundreds to thousands of requests — one commenter on the ticket reports
+    2,000+ requests and ten minutes for about 1,500 groups — so expect HTTP 429 and add backoff.
+  </p>
+  <div class="tablewrap">
+  <table>
+    <tr><th>Place</th><th>Call</th><th>What to look for</th></tr>
+    <tr><td>Permission schemes</td><td><code>GET /rest/api/3/permissionscheme?expand=permissions</code>, then <code>GET /rest/api/3/project/{key}/permissionscheme</code> per project</td><td><code>permissions[].holder.type == "group"</code>; <code>holder.parameter</code> is the group name, <code>holder.value</code> the group ID</td></tr>
+    <tr><td>Project roles</td><td><code>GET /rest/api/3/role</code>, then <code>GET /rest/api/3/project/{id}/role/{roleId}</code> per project; default actors: <code>GET /rest/api/3/role/{id}/actors</code></td><td>actors with type <code>atlassian-group-role-actor</code></td></tr>
+    <tr><td>Notification schemes</td><td><code>GET /rest/api/3/notificationscheme?expand=all</code>; projects per scheme: <code>GET /rest/api/3/notificationscheme/project?notificationSchemeId=…</code></td><td>recipients with <code>notificationType == "Group"</code></td></tr>
+    <tr><td>Issue security</td><td><code>GET /rest/api/3/issuesecurityschemes</code>, then <code>GET /rest/api/3/issuesecurityschemes/level/member?schemeId=…&amp;expand=group</code></td><td>returns members for company-managed schemes only; team-managed projects do not expose their security members here</td></tr>
+    <tr><td>Filters</td><td><code>GET /rest/api/3/filter/search?expand=sharePermissions,editPermissions,owner,jql,subscriptions&amp;overrideSharePermissions=true</code></td><td><code>overrideSharePermissions</code> is the important bit: without it you only see filters shared with you. Check <code>sharePermissions[]</code> and <code>editPermissions[]</code> for type <code>group</code>, search <code>jql</code> for <code>membersOf</code>, and look at <code>subscriptions[]</code>. Subscriptions created by other users may still not be visible to you.</td></tr>
+    <tr><td>Dashboards</td><td><code>GET /rest/api/3/dashboard/search?groupId=…&amp;expand=sharePermissions,editPermissions</code></td><td>no admin override here; you only see dashboards visible to your account. If you are not in the group, you will miss dashboards shared only with it.</td></tr>
+    <tr><td>Product access</td><td><code>GET /rest/api/3/applicationrole</code></td><td><code>groups</code> and <code>defaultGroups</code> per application role</td></tr>
+    <tr><td>Members</td><td><code>GET /rest/api/3/group/member?groupId=…&amp;includeInactiveUsers=true</code></td><td>how many people, and how many deactivated accounts, a change affects</td></tr>
+    <tr><td>Workflow conditions</td><td><code>GET /rest/api/3/workflows/search?expand=values.transitions</code> (the older <code>/workflow/search?expand=transitions.rules</code> is deprecated)</td><td>each transition carries its conditions as rules with a <code>ruleKey</code> and <code>parameters</code>; group conditions carry the group in the parameters. App-provided conditions (ScriptRunner, JSU) have their own rule keys and formats.</td></tr>
+    <tr><td>Automation</td><td>no API that searches rules by group</td><td>what works in bulk: Jira settings → System → Automation rules → … → <a href="https://support.atlassian.com/cloud-automation/docs/import-and-export-jira-automation-rules/" rel="noopener">Export rules</a>, one JSON file with all global and project rules; search it for the group name</td></tr>
+    <tr><td>Global permissions</td><td>no public API that returns the grantees</td><td>the Global permissions page in Jira settings is the only place to check, by hand</td></tr>
+  </table>
+  </div>
+  <p>A minimal example for the filter call, which is the one most scripts forget:</p>
+<pre><code>curl -s -u you@example.com:API_TOKEN \
+  "https://your-site.atlassian.net/rest/api/3/filter/search?expand=sharePermissions,editPermissions,jql,subscriptions&amp;overrideSharePermissions=true&amp;maxResults=100&amp;startAt=0"</code></pre>
+
+  <h2>Before you delete a group, a short checklist</h2>
+  <ul>
+    <li>Export the member list first (you cannot undo a deletion, and membership is the one thing you can restore by hand).</li>
+    <li>Check whether the group is a default group for product access; if it is, new users will stop getting the product.</li>
+    <li>Look for filters and dashboards shared only with this group — their owners will not be warned.</li>
+    <li>Look at notification schemes; lost notifications are the failure nobody notices for weeks.</li>
+    <li>Look at issue security levels; issues do not disappear, they become invisible.</li>
+    <li>Open Global permissions by hand.</li>
+    <li>Search the workflow conditions and the automation export for the group name.</li>
+    <li>If your organization also uses Confluence, check space permissions and page restrictions there; a deleted group can leave a restriction that only Atlassian support can remove.</li>
+    <li>Keep what you found, with a date, as the evidence for your next access review.</li>
+  </ul>
+
+  <h2>Where an app fits, and where it does not</h2>
+  <div class="panel">
+    <p>
+      I built <a href="../">Group Audit for Jira</a> because I got tired of the script. It is a
+      read-only admin page that runs items 1–7 of the list above for one group and exports the
+      result as CSV with a completeness status per row; it does not cover 8–11 or anything
+      outside Jira, and every report says so. If you are happy with your script, keep it — the
+      calls above are exactly what it runs. If you want to try it, it is on the
+      <a href="https://marketplace.atlassian.com/apps/1133367000" rel="noopener" data-track="ga-install-app-guide">Atlassian Marketplace</a>,
+      free for sites up to 10 users.
+    </p>
+  </div>
+  <p>
+    If you have a cleaner way to get global permission grantees or automation conditions than
+    the ones above, write to <a href="mailto:kontakt@arbeitstyp.de">kontakt@arbeitstyp.de</a>;
+    I will update the article.
+  </p>
+</main>
+<footer>
+  <a href="../">Group Audit for Jira</a> · <a href="../docs/">Documentation</a> · <a href="../support/">Support</a> ·
+  Operated by Fabian Hönes (Arbeitstyp) · <a href="https://arbeitstyp.de/impressum.html">Impressum</a> ·
+  Jira is a trademark of Atlassian Pty Ltd. This site is not affiliated with or endorsed by Atlassian.
+</footer>
+<script>
+'use strict';
+(function () {
+  var GC = 'https://arbeitstyp.goatcounter.com/count';
+  var links = document.querySelectorAll('a[data-track]');
+  for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('click', function () {
+      try {
+        var u = new URL(GC);
+        u.searchParams.set('p', '/' + this.getAttribute('data-track'));
+        u.searchParams.set('t', this.getAttribute('data-track'));
+        u.searchParams.set('rnd', String(Date.now()));
+        new Image().src = u.toString();
+      } catch (e) {}
+    });
+  }
+})();
+</script>
+</body>
+</html>

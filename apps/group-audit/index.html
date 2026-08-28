@@ -4,41 +4,75 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Group Audit for Jira — Find Where a Group Is Used</title>
-<meta name="description" content="Group Audit for Jira shows every place a Jira group is used — permission schemes, roles, filters, dashboards and more — before you change or delete it. Read-only, runs on Atlassian.">
+<meta name="description" content="Group Audit for Jira shows every place a Jira Cloud group is used — permission schemes, project roles, notification and issue security schemes, filters, dashboards, product access — before you change or delete it. Read-only, runs on Atlassian, CSV export. Free for sites up to 10 users.">
+<link rel="canonical" href="https://arbeitstyp.de/apps/group-audit/">
+<meta property="og:title" content="Group Audit for Jira — Find Where a Group Is Used">
+<meta property="og:description" content="See every place a group is used in Jira Cloud before you change or delete it. Read-only admin page with CSV export. Free up to 10 users.">
+<meta property="og:url" content="https://arbeitstyp.de/apps/group-audit/">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Group Audit for Jira (Find Where a Group Is Used)",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Jira Cloud",
+  "url": "https://arbeitstyp.de/apps/group-audit/",
+  "installUrl": "https://marketplace.atlassian.com/apps/1133367000",
+  "description": "Read-only Jira Cloud admin page that lists every place a group is used — permission schemes, project roles, notification and issue security schemes, filters (sharing, JQL, subscriptions), dashboards and product access — with deep links and a CSV export.",
+  "author": { "@type": "Person", "name": "Fabian Hönes" },
+  "publisher": { "@type": "Organization", "name": "Arbeitstyp", "url": "https://arbeitstyp.de/" },
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free for Jira Cloud sites with up to 10 users; per-user pricing above that." }
+}
+</script>
 <style>
-  :root { --text:#1c1e21; --muted:#5c6066; --bg:#ffffff; --panel:#f5f6f7; --border:#e0e2e5; --accent:#1868db; }
+  :root { --text:#1c1e21; --muted:#5c6066; --bg:#ffffff; --panel:#f5f6f7; --border:#e0e2e5; --accent:#1868db; --btn-text:#ffffff; }
   @media (prefers-color-scheme: dark) {
-    :root { --text:#d6d7d9; --muted:#9a9da3; --bg:#1b1c1e; --panel:#242628; --border:#3a3d40; --accent:#669df1; }
+    :root { --text:#d6d7d9; --muted:#9a9da3; --bg:#1b1c1e; --panel:#242628; --border:#3a3d40; --accent:#669df1; --btn-text:#101214; }
   }
   * { box-sizing: border-box; }
   body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); line-height:1.6; }
   main { max-width:720px; margin:0 auto; padding:48px 20px 64px; }
   h1 { font-size:1.9rem; margin:0 0 6px; }
-  .tagline { color:var(--muted); font-size:1.05rem; margin:0 0 28px; }
+  .tagline { color:var(--muted); font-size:1.05rem; margin:0 0 20px; }
   h2 { font-size:1.15rem; margin:32px 0 8px; }
   ul { padding-left:20px; margin:8px 0; }
   li { margin:4px 0; }
   .panel { background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:16px 20px; margin:20px 0; }
   a { color:var(--accent); text-decoration:none; }
   a:hover { text-decoration:underline; }
+  .btn { display:inline-block; background:var(--accent); color:var(--btn-text); padding:12px 22px; border-radius:6px; font-weight:600; }
+  .btn:hover { text-decoration:none; opacity:.92; }
+  .btn-note { color:var(--muted); font-size:0.9rem; margin:8px 0 0; }
+  .links a { margin-right:16px; }
   footer { max-width:720px; margin:0 auto; padding:0 20px 40px; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); padding-top:20px; }
   .badge { display:inline-block; background:var(--panel); border:1px solid var(--border); border-radius:100px; padding:2px 12px; font-size:0.8rem; color:var(--muted); margin-right:6px; }
+  code { font-size:0.9em; }
 </style>
 </head>
 <body>
 <main>
   <h1>Group Audit for Jira</h1>
-  <p class="tagline">See every place a group is used in Jira — before you change or delete it.</p>
+  <p class="tagline">See every place a group is used in Jira Cloud — before you change or delete it.</p>
   <p>
     <span class="badge">Read-only</span>
     <span class="badge">Runs on Atlassian</span>
     <span class="badge">CSV export</span>
+    <span class="badge">Free up to 10 users</span>
   </p>
+
+  <p>
+    <a class="btn" data-track="ga-install-app-hero" target="_blank" rel="noopener"
+       href="https://marketplace.atlassian.com/apps/1133367000">Install from the Atlassian Marketplace</a>
+  </p>
+  <p class="btn-note">Jira Cloud only. Free for sites with up to 10 users; per-user pricing above that, with a free trial.</p>
+
   <p>
     Jira can't tell you where a group is used
     (<a href="https://jira.atlassian.com/browse/JRACLOUD-71967" rel="noopener">JRACLOUD-71967</a>,
     1,000+ votes, open since 2019). So admins delete groups blind, break permissions,
-    and rebuild access by support ticket. Group Audit answers the question in seconds.
+    and rebuild access by support ticket. Group Audit answers the question in seconds:
+    open <em>Jira settings → Apps → Group Audit</em>, type a group name, click Scan.
   </p>
 
   <h2>What it scans</h2>
@@ -52,6 +86,11 @@
     <li>Product access (application role groups)</li>
     <li>Member counts — including deactivated accounts still in the group</li>
   </ul>
+  <p>
+    Every row has a deep link to the place it was found, and the CSV export carries
+    the group, site, scan time and a status per row — built for ISO 27001, SOC 2 and
+    SOX user access reviews.
+  </p>
 
   <div class="panel">
     <strong>Honest by design.</strong> If any check cannot finish, the report is marked
@@ -61,6 +100,21 @@
     restrictions, automation rules, global permission grants and more) instead of
     hiding it. See the <a href="docs/">documentation</a> for the full list.
   </div>
+
+  <h2>Permissions and data</h2>
+  <p>
+    All scopes are granular read scopes, deliberately not "Administer Jira". The app
+    cannot change or delete anything, stores nothing, and sends nothing out of your
+    site — it runs entirely on Atlassian infrastructure ("Runs on Atlassian").
+    The <a href="security/">security page</a> lists every scope with a reason.
+  </p>
+
+  <h2>Guide</h2>
+  <p>
+    <a href="where-is-a-group-used-in-jira-cloud/">Where is this group used in Jira Cloud?</a>
+    — every place a group can be used, what the UI and the REST API can tell you
+    without any app, and a checklist before you delete a group.
+  </p>
 
   <h2>Documentation &amp; support</h2>
   <p>
@@ -76,11 +130,38 @@
     The app is read-only, stores nothing, and no data ever leaves your Atlassian
     instance — see the <a href="privacy.html">privacy policy</a>.
   </p>
+
+  <p class="links">
+    <a data-track="ga-install-app-links" target="_blank" rel="noopener"
+       href="https://marketplace.atlassian.com/apps/1133367000">Install</a>
+    <a href="where-is-a-group-used-in-jira-cloud/">Guide</a>
+    <a href="docs/">Documentation</a>
+    <a href="support/">Support</a>
+    <a href="security/">Security</a>
+    <a href="privacy.html">Privacy policy</a>
+  </p>
 </main>
 <footer>
-  Group Audit for Jira · <a href="docs/">Documentation</a> ·
-  <a href="support/">Support</a> · <a href="security/">Security</a> · <a href="privacy.html">Privacy policy</a> ·
+  Group Audit for Jira · Operated by Fabian Hönes (Arbeitstyp) · <a href="https://arbeitstyp.de/impressum.html">Impressum</a> ·
   Jira is a trademark of Atlassian Pty Ltd. This app is not affiliated with or endorsed by Atlassian.
 </footer>
+<script>
+'use strict';
+(function () {
+  var GC = 'https://arbeitstyp.goatcounter.com/count';
+  var links = document.querySelectorAll('a[data-track]');
+  for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('click', function () {
+      try {
+        var u = new URL(GC);
+        u.searchParams.set('p', '/' + this.getAttribute('data-track'));
+        u.searchParams.set('t', this.getAttribute('data-track'));
+        u.searchParams.set('rnd', String(Date.now()));
+        new Image().src = u.toString();
+      } catch (e) {}
+    });
+  }
+})();
+</script>
 </body>
 </html>
