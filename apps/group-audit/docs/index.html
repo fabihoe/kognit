@@ -42,43 +42,62 @@
       (as a Jira admin: <em>Apps → Explore more apps</em>, search for
       “Group Audit”, then <em>Install</em>; or use the “Try it free” button on the listing).</li>
     <li>Open it under <em>Jira Settings (⚙) → Apps → Group Audit</em>.
-      The page is visible to Jira administrators only, and the app additionally
-      verifies the ADMINISTER permission on every request.</li>
+      The page is visible to Jira administrators only, and every request runs with
+      your own Jira permissions.</li>
     <li>No configuration is needed. The app stores nothing and writes nothing.</li>
   </ol>
 
-  <h2>2. Running a scan</h2>
+  <h2>2. Looking up a group</h2>
   <ol>
     <li>Start typing a group name and pick the group from the suggestion list
       (keyboard: arrow keys + Enter).</li>
-    <li>Click <strong>Scan usages</strong>. A checklist shows each area being
-      scanned. Large sites are scanned in resumable chunks; hundreds of projects
-      or thousands of filters are fine — the scan just takes longer.</li>
-    <li>Read the summary (“N usages in M places · affects P projects”), the
-      result table, and — always — the <strong>coverage notes</strong> at the bottom.</li>
+    <li>Click <strong>Scan site</strong>. Group Audit reads every area listed below
+      once — several requests at a time, with a progress bar and a checklist — and
+      you can cancel at any time. Small sites take seconds, sites with hundreds of
+      projects a few minutes.</li>
+    <li>Read the summary (usages, places, projects affected, members), the results
+      <strong>by area</strong> or <strong>by project</strong>, and — always — the
+      <strong>coverage notes</strong> at the bottom.</li>
+    <li>After one scan, every other group can be looked up <strong>instantly</strong>
+      without scanning again. <em>Rescan site</em> refreshes the data.</li>
   </ol>
+
+  <h3>All groups</h3>
+  <p>
+    The <strong>All groups</strong> tab lists every group of your site with its usage
+    count, from the same scan — sortable, filterable and exportable, with optional member
+    counts. Groups with <em>no usages found</em> are the starting point for a cleanup;
+    groups created by Atlassian (product access, admin groups) are marked, because they
+    are usually used in global permissions, which no API exposes. Places that still
+    reference a group which no longer exists — typically <code>membersOf()</code> in a
+    filter — are listed separately.
+  </p>
 
   <h3>What is scanned</h3>
   <ul>
     <li><strong>Permission schemes</strong> — the group as a permission holder, attributed to the projects using the scheme</li>
-    <li><strong>Notification schemes</strong> — the group as a notification recipient (group-custom-field notifications are flagged “Manual check required” instead of guessed)</li>
+    <li><strong>Notification schemes</strong> — the group as a notification recipient, attributed to projects</li>
     <li><strong>Project roles</strong> — the group as a role actor in every project, plus default role actors for future projects</li>
     <li><strong>Issue security schemes</strong> — the group as a security-level member</li>
     <li><strong>Filters</strong> — sharing and editing grants (all filters, via admin override), JQL that references the group via <code>membersOf(…)</code>, and filter subscriptions emailed to the group</li>
     <li><strong>Dashboards</strong> — sharing and editing grants, as visible to your account (see coverage notes below)</li>
     <li><strong>Product access</strong> — application-role access groups, incl. the default-for-new-users flag</li>
-    <li><strong>Group members</strong> — total, active and deactivated member counts for context</li>
+    <li><strong>Group members</strong> — total, active and deactivated counts, and the full member list (Members tab)</li>
   </ul>
+  <p>
+    Grants to “the group in a custom field” (permission schemes, notification schemes,
+    issue security levels) are listed under <em>Manual check required</em> — which group
+    that is depends on issue data, so the app never guesses.
+  </p>
 
   <h3>What is not scanned (coverage notes)</h3>
-  <p>Every report discloses its limits — in the UI and in the CSV:</p>
+  <p>Every report discloses its limits — in the app and in every export:</p>
   <ul>
-    <li>Workflow conditions and board/sprint permissions</li>
-    <li>Comment and worklog visibility restrictions</li>
+    <li>Global permission grants (Jira Cloud exposes no API that lists their holders)</li>
+    <li>Automation rules, workflow conditions and validators, and Jira Service Management approval steps that name a group</li>
+    <li>Board and sprint permissions, comment and worklog visibility restrictions</li>
     <li>Values of group-picker custom fields on issues</li>
-    <li>Automation rule conditions</li>
-    <li>Archived projects and archived dashboards</li>
-    <li>Global permission grants (Jira Cloud exposes no API for their grantees)</li>
+    <li>Archived projects and archived dashboards, JSM organizations and portal access</li>
     <li>Issue security schemes of team-managed projects (the Jira API only exposes
       members for company-managed schemes; affected schemes are named in a coverage
       note when present)</li>
@@ -98,18 +117,20 @@
     <em>incomplete</em> report.
   </div>
 
-  <h2>3. CSV export</h2>
+  <h2>3. Exports</h2>
   <p>
-    <strong>Download CSV</strong> saves the full report;
-    <strong>Copy CSV</strong> puts it on the clipboard. The file is UTF-8 with BOM
-    (opens correctly in Excel, Google Sheets and Numbers). Values that could be
-    interpreted as spreadsheet formulas are prefixed with an apostrophe on purpose
-    (formula-injection protection).
+    The <strong>Export</strong> menu of a group report offers <strong>Download CSV</strong>
+    (audit evidence), <strong>Download JSON</strong> (for scripts), <strong>Copy summary</strong>
+    (plain text for a change ticket or an email), <strong>Copy CSV</strong> and
+    <strong>Print or save as PDF</strong>. The Members tab exports the member list, the
+    All groups tab the overview. CSV files are UTF-8 with BOM (they open correctly in
+    Excel, Google Sheets and Numbers); values that could be interpreted as spreadsheet
+    formulas are prefixed with an apostrophe on purpose (formula-injection protection).
   </p>
   <div class="tablewrap">
   <table>
     <tr><th>Column</th><th>Meaning</th></tr>
-    <tr><td>Surface</td><td>Where the group is used (e.g. “Permission scheme”, “Filter JQL”) — plus the special rows “Manual check required”, “Scan error” and “Coverage note”</td></tr>
+    <tr><td>Surface</td><td>Where the group is used (e.g. “Permission scheme”, “Filter JQL”) — plus the special rows “Group members”, “Manual check required”, “Scan error” and “Coverage note”</td></tr>
     <tr><td>Location</td><td>The scheme, project, filter or dashboard name</td></tr>
     <tr><td>Detail</td><td>The specific grant, event, role or note</td></tr>
     <tr><td>Projects</td><td>Affected projects; “unknown (lookup failed)” or “(list may be incomplete)” when attribution data could not be fully read — never silently empty</td></tr>
@@ -122,7 +143,8 @@
   </div>
   <p>
     If any check failed, the filename carries an <code>-INCOMPLETE</code> suffix and
-    each failure appears as a “Scan error” row.
+    each failure appears as a “Scan error” row. If the member count could not be read,
+    the “Group members” row says so instead of being left out.
   </p>
 
   <h2>4. Permissions &amp; security</h2>
@@ -132,8 +154,9 @@
     <li>No storage, no egress, no analytics: the app runs entirely on Atlassian
       infrastructure (<em>Runs on Atlassian</em>) and your data never leaves your instance.
       Details: <a href="../privacy.html">privacy policy</a>.</li>
-    <li>Every request is additionally checked server-side for the caller’s
-      ADMINISTER permission and (for paid installs) an active license.</li>
+    <li>No backend: every Jira request is made from the app page with <em>your</em>
+      permissions (Forge <code>requestJira</code>), so the app can never see more than
+      you can, and nothing runs outside your session.</li>
   </ul>
 
   <h2>5. Troubleshooting</h2>
@@ -144,17 +167,17 @@
     and as “Scan error” rows in the CSV. <strong>Fix:</strong> run the scan again
     (off-peak hours help on big sites). Never act on an incomplete report alone.
   </p>
-  <h3>“Could not verify permissions”</h3>
-  <p>Jira was temporarily unavailable while checking your admin permission. Retry in a moment.</p>
   <h3>“No active license”</h3>
-  <p>The trial or subscription is inactive. A Jira admin can manage it under <em>Apps → Manage apps</em>.</p>
-  <h3>“The site URL could not be determined”</h3>
-  <p>Reload the page. Result links and the CSV link column need the site URL; everything else works without it.</p>
-  <h3>Scan is slow on a large site</h3>
+  <p>The trial or subscription is inactive. A Jira admin can manage it under <em>Apps → Manage your apps</em>.</p>
+  <h3>“The site address could not be determined”</h3>
+  <p>Reload the page. Result links and the CSV link column need the site address; everything else works without it.</p>
+  <h3>“You need permission to browse users and groups”</h3>
+  <p>The group search uses your own Jira permissions. Jira administrators normally have them; check the <em>Browse users and groups</em> global permission.</p>
+  <h3>Scan takes a while on a large site</h3>
   <p>
-    The app scans sequentially with rate-limit-aware backoff on purpose, so it never
-    degrades your instance. Hundreds of projects can take a few minutes — the
-    progress checklist shows where it is.
+    The app reads at most eight things at once and backs off whenever Jira asks it to,
+    so it never degrades your instance. Sites with hundreds of projects take a few
+    minutes; the progress bar shows where it is, and you can cancel at any time.
   </p>
 
   <h2>Contact</h2>

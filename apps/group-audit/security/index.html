@@ -31,7 +31,7 @@
 <body>
 <main>
   <h1>Security &amp; Incident Response — Group Audit for Jira</h1>
-  <p class="meta">Version 1.0 · Effective 27 August 2026 · Applies to the Marketplace app “Group Audit for Jira (Find Where a Group Is Used)”</p>
+  <p class="meta">Version 1.1 · Effective with app version 3.0 (October 2026) · Applies to the Marketplace app “Group Audit for Jira (Find Where a Group Is Used)”</p>
 
   <div class="panel">
     <strong>Report a security issue:</strong>
@@ -48,14 +48,18 @@
     <li><strong>Read-only by design.</strong> The app requests granular read scopes
       only (no “Administer Jira” permission) and cannot change or delete anything.</li>
     <li><strong>No storage.</strong> The app keeps no data: no Forge storage, no
-      external database, no caches outside the current request.</li>
-    <li><strong>Admin-only.</strong> Every backend call runs as the app and is guarded
-      by a server-side check that the calling user is a Jira administrator; the
-      user interface is a Jira admin page.</li>
+      external database, not even browser storage. Scan results live in the open
+      admin page only and are gone when it is closed.</li>
+    <li><strong>No backend, admin-only.</strong> The app has no backend function.
+      Every Jira request is made from the admin page in the signed-in admin’s
+      session (Forge <code>requestJira</code>), so Jira’s own permission checks apply
+      and the app can never see more than the person using it. The page itself is a
+      Jira admin page, visible to Jira administrators only.</li>
     <li><strong>No secrets, no credentials.</strong> The app collects no Atlassian
       or third-party credentials and holds no API keys.</li>
-    <li><strong>Minimal logging.</strong> Application logs contain counts, booleans
-      and error classes — never group names, user data, tokens or credentials.</li>
+    <li><strong>No server-side logging.</strong> Without a backend function there are
+      no app logs on Atlassian’s side; errors are written only to the admin’s own
+      browser console.</li>
   </ul>
 
   <h2>2. Secure development</h2>
@@ -68,8 +72,10 @@
       findings.</li>
     <li>Every release passes static analysis (ESLint), a security review against the
       OWASP Top 10 (input validation, regular-expression safety, injection in JQL
-      strings, least privilege) and a live end-to-end test suite on a staging site
-      before <code>forge deploy</code> to production.</li>
+      strings, least privilege), an automated test suite against a simulated Jira
+      (including failure, rate-limit and cancellation cases) and a live end-to-end
+      test on a development site with known reference values before
+      <code>forge deploy</code> to production.</li>
     <li>Atlassian’s automated vulnerability scanning of the app is monitored through
       the Atlassian Marketplace Security (AMS) project.</li>
   </ul>
