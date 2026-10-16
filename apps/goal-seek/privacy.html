@@ -19,6 +19,8 @@
   a { color:var(--accent); text-decoration:none; }
   a:hover { text-decoration:underline; }
   code { background:var(--panel); border:1px solid var(--border); border-radius:4px; padding:1px 5px; font-size:0.88em; }
+  ul { padding-left:20px; margin:8px 0; }
+  li { margin:6px 0; }
   .panel { background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin:18px 0; }
   footer { max-width:720px; margin:0 auto; padding:20px 20px 40px; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); }
 </style>
@@ -26,7 +28,7 @@
 <body>
 <main>
   <h1>Privacy Policy — Goal Seek for Google Sheets</h1>
-  <p class="meta">Effective date: 13 August 2026 · Last updated: 13 August 2026</p>
+  <p class="meta">Effective date: 16 October 2026 · Last updated: 16 October 2026</p>
 
   <div class="panel">
     <strong>Summary:</strong> Goal Seek runs entirely inside Google Sheets, in the
@@ -60,11 +62,19 @@
     add-on's user interface and grants no access to your data by itself.
   </p>
   <p>
-    Through these scopes the add-on accesses: the value and formula of the target
-    cell and the variable cell you select, the recalculated values during the
-    search, and the sidebar form inputs you type. It accesses nothing else — not
-    your other spreadsheets, not your Drive, not your contacts, not your email,
-    not your account profile.
+    Through these scopes the add-on accesses, in the spreadsheet you use it in:
+    the value and formula of the target cell and the variable cell you select,
+    the recalculated values during the search, the sidebar form inputs you type,
+    and the address of the cell currently selected in the sheet and whether it
+    holds a formula (so that clicking a cell can fill a field). To suggest
+    suitable variable cells, it also reads the formulas and values of the cells
+    your target formula refers to, directly or through other formulas (at most
+    40 cells), and the neighbouring cells to the left of and above each
+    suggested cell, whose text it shows as a label. It also reads the
+    spreadsheet's locale and time zone and your language setting, so that
+    numbers and dates are read and shown correctly. It accesses nothing else —
+    not your other spreadsheets, not your Drive, not your contacts, not your
+    email, not your account profile.
   </p>
 
   <h2>3. How that data is used</h2>
@@ -75,28 +85,48 @@
     until a solution is found. Before the first write it saves the original
     content of the variable cell into the spreadsheet's own document properties,
     so it can always be restored — after a cancel, an error, or an interrupted
-    run. It also remembers your last form inputs per spreadsheet, so the sidebar
-    can prefill them next time. That is the <strong>only</strong> use of the
-    data — providing the goal-seek feature you invoked. There is no secondary
-    use of any kind.
+    run. While you fill in the form, it shows the current values of the cells
+    you chose and suggests variable cells as described in section 2; these reads
+    only produce hints in the sidebar and are not stored. It also remembers your
+    last form inputs per spreadsheet, so the sidebar can prefill them next time,
+    and counts your successful runs, so that after a few of them it can ask
+    whether you would like to rate the add-on. That is the
+    <strong>only</strong> use of the data — providing the goal-seek feature you
+    invoked. There is no secondary use of any kind.
   </p>
 
   <h2>4. Where data is stored, and for how long (retention)</h2>
   <p>
-    All processing happens <strong>inside Google's infrastructure, inside the one
-    spreadsheet the add-on runs in</strong>, executed by Google Apps Script under
-    your own Google account. Nothing is copied to any system outside your Google
-    account. We — the developer — operate no servers and no databases, and we
-    never see, receive, store or retain any of your spreadsheet data.
+    All processing happens <strong>inside Google's infrastructure</strong>,
+    executed by Google Apps Script under your own Google account. Nothing is
+    copied to any system outside your Google account. We — the developer —
+    operate no servers and no databases, and we never see, receive, store or
+    retain any of your spreadsheet data.
   </p>
+  <p>The add-on persists only the following, all in Google Apps Script's
+    storage for your account:</p>
+  <ul>
+    <li>the saved original content of the variable cell, in the spreadsheet's
+      own document properties, until the run is over and the cell either keeps
+      the new value or has its original content back;</li>
+    <li>while a run is active, a short marker in the same document properties
+      that stops two people from running Goal Seek on one spreadsheet at the
+      same time; it is removed when the run ends. The marker and the saved
+      original content are filed under a temporary, anonymous user key provided
+      by Google, so that several people can use the add-on in one spreadsheet;</li>
+    <li>your last sidebar inputs (cell references, target value and advanced
+      options), stored per spreadsheet ID for up to the 20 spreadsheets you used
+      most recently, in the add-on's user properties. These belong to your
+      Google account and only the add-on can read them, while you use it;</li>
+    <li>in the same user properties, the number of your successful runs and
+      whether you have answered the rating request.</li>
+  </ul>
   <p>
-    The only data the add-on persists are (a) the saved original value of the
-    variable cell and (b) your last sidebar inputs — both stored in the
-    spreadsheet's own document properties, which live inside that spreadsheet in
-    your Google account. They are retained only as long as the spreadsheet
-    exists: deleting the spreadsheet deletes them, and section 9 describes how to
-    remove them earlier. Because no data ever reaches us, our own retention
-    period for Google user data is <strong>zero</strong>.
+    Document properties live inside the spreadsheet and are deleted together
+    with it. The user properties contain no cell values other than the
+    references and numbers you typed into the form; older entries are replaced
+    automatically. Because no data ever reaches us, our own retention period for
+    Google user data is <strong>zero</strong>.
   </p>
 
   <h2>5. Sharing of Google user data</h2>
@@ -117,13 +147,14 @@
     enforced by Google's infrastructure. The add-on itself opens no other
     connections.<br>
     <strong>Encryption at rest.</strong> Everything the add-on reads or writes
-    (cell values, document properties) is stored in Google Sheets and is
+    (cell values, document and user properties) is stored by Google and is
     encrypted at rest by Google as described in
     <a href="https://cloud.google.com/docs/security/encryption/default-encryption" rel="noopener">Google's default encryption documentation</a>.<br>
     <strong>Data minimization &amp; least privilege.</strong> The add-on requests
     the narrowest available scopes (section 2): it can only touch the spreadsheet
     it runs in, and only while you use it. It reads only the cells involved in
-    the goal-seek you configure.<br>
+    the goal-seek you configure and, for the suggestions, the cells your target
+    formula depends on.<br>
     <strong>No external attack surface.</strong> With no servers, no database and
     no egress, there is no system of ours that could be breached to expose your
     data. Sandboxing and isolation of the Apps Script runtime are provided and
@@ -167,7 +198,10 @@
     or uninstall it via <em>Extensions → Add-ons → Manage add-ons</em> in Google
     Sheets — the add-on then loses all access immediately. The small amount of
     data stored in a spreadsheet's document properties (section 4) is removed by
-    deleting the spreadsheet, and it never leaves that file. Because we hold no
+    deleting the spreadsheet, and it never leaves that file. The entries in the
+    add-on's user properties stay with your Google account; they hold only cell
+    references, the numbers you typed into the form and two counters, and older
+    entries are replaced automatically. Because we hold no
     copy of your data, there is nothing further for us to delete; if you have
     any doubt, contact us (section 10) and we will confirm this for your case.
   </p>

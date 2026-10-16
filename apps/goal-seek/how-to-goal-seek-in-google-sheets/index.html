@@ -38,7 +38,7 @@
   "headline": "How to Do Goal Seek in Google Sheets (3 Ways, With Examples)",
   "description": "Google Sheets has no built-in Goal Seek menu — three practical ways to backsolve any formula, with worked examples and troubleshooting.",
   "datePublished": "2026-08-12",
-  "dateModified": "2026-08-14",
+  "dateModified": "2026-10-16",
   "author": { "@type": "Person", "name": "Fabian Hönes" },
   "mainEntityOfPage": "https://arbeitstyp.de/apps/goal-seek/how-to-goal-seek-in-google-sheets/"
 }
@@ -56,7 +56,7 @@
     {
       "@type": "Question",
       "name": "Is Goal Seek in Google Sheets free?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Google's official Goal Seek add-on is free, and the Goal Seek – Fast & Private add-on has a free plan with 5 runs per day." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Google's official Goal Seek add-on is free, and the Goal Seek – Fast & Private add-on is free too, with no daily limit." }
     },
     {
       "@type": "Question",
@@ -75,7 +75,7 @@
 <body>
 <main>
   <h1>How to Do Goal Seek in Google Sheets</h1>
-  <p class="meta">Updated August 2026 · 8 min read ·
+  <p class="meta">Updated October 2026 · 8 min read ·
     <a href="../index.html">Goal Seek – Fast &amp; Private</a></p>
 
   <p><strong>Goal Seek answers the backwards question:</strong> you know the
@@ -155,9 +155,13 @@
       (free, takes under a minute).</li>
     <li>Open <em>Extensions → Goal Seek → Open Goal Seek</em>.</li>
     <li><em>Set cell:</em> B5 — <em>To value:</em> 0 — <em>By changing
-      cell:</em> B2 (the sidebar prefills from your selection).</li>
+      cell:</em> B2. You don't have to type the cells: click the grid button
+      next to a field and then the cell in the sheet. For the changing cell the
+      sidebar also suggests the inputs of your formula (here B1 to B4, with
+      their labels).</li>
     <li>Press <em>Seek goal</em>. You'll see live progress and an iteration
-      log; the result card shows old → new value, deviation and time.</li>
+      log; the result card shows the new value next to the old one, with
+      deviation and time under <em>Details</em>.</li>
     <li>Keep the solution — or restore the original value with one click. The
       original cell content is backed up before the first write, so a failed or
       cancelled run never damages your sheet.</li>
@@ -167,7 +171,7 @@
     <strong>Try it:</strong> <a data-track="gs-install-tutorial-cta" target="_blank" rel="noopener"
     href="https://workspace.google.com/marketplace/app/goal_seek_%E2%80%93_fast_private/640557799458">install
     Goal Seek – Fast &amp; Private from the Google Workspace Marketplace</a> —
-    free for 5 runs a day, German and English UI, dark mode included.
+    free with no daily limit, in English and German.
     <a href="../index.html">Learn more about the add-on.</a>
   </div>
 
@@ -188,7 +192,7 @@
 
   <h2 id="troubleshooting">Troubleshooting: when Goal Seek "doesn't work"</h2>
   <ul>
-    <li><strong>“No sign change found”</strong> — across everything the solver
+    <li><strong>“No solution found”</strong> — across everything the solver
       tested, your formula never crossed the target value. Often the goal is
       simply unreachable (a squared term can't go negative), or the search
       needs a hint: set a different start value or bounds.</li>
@@ -210,8 +214,8 @@
   <p>No. Excel ships Goal Seek under <em>Data → What-If Analysis</em>; Google
   Sheets requires an add-on (or manual solving).</p>
   <h3>Is Goal Seek in Google Sheets free?</h3>
-  <p>Yes — Google's add-on is free, and Goal Seek – Fast &amp; Private includes
-  a free plan (5 runs per day, resets at midnight Central European Time).</p>
+  <p>Yes — Google's add-on is free, and Goal Seek – Fast &amp; Private is free
+  too, with no daily limit.</p>
   <h3>Can Goal Seek change several cells at once?</h3>
   <p>No. Goal Seek varies exactly one input. For multiple inputs plus
   constraints you want an optimizer (e.g. a linear-programming solver), which
