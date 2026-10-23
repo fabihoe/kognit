@@ -32,6 +32,16 @@
   th { background:var(--panel); }
   td:last-child, th:last-child { text-align:right; }
   .cta { background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:8px; padding:16px 18px; margin:26px 0; }
+  .video { margin:16px 0 22px; }
+  .video-poster { display:block; position:relative; width:100%; padding:0; border:1px solid var(--border); border-radius:10px; overflow:hidden; background:#000; cursor:pointer; aspect-ratio:16/9; }
+  .video-poster img { display:block; width:100%; height:100%; object-fit:cover; }
+  .video-poster .play { position:absolute; right:3%; bottom:5%; display:flex; align-items:center; gap:10px; height:44px; padding:0 18px 0 16px; border-radius:999px; background:rgba(28,30,33,.86); color:#fff; font:600 15px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; box-shadow:0 2px 10px rgba(0,0,0,.3); transition:background .15s; }
+  .video-poster .play::before { content:''; border-style:solid; border-width:8px 0 8px 13px; border-color:transparent transparent transparent #fff; }
+  @media (max-width:520px) { .video-poster .play { height:34px; gap:8px; padding:0 13px 0 12px; font-size:13px; } .video-poster .play::before { border-width:6px 0 6px 10px; } }
+  .video-poster:hover .play, .video-poster:focus-visible .play { background:var(--accent); }
+  .video-poster:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .video iframe { display:block; width:100%; aspect-ratio:16/9; border:0; border-radius:10px; background:#000; }
+  .video figcaption { color:var(--muted); font-size:0.88rem; margin-top:8px; line-height:1.5; }
   footer { max-width:720px; margin:0 auto; padding:20px 20px 40px; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); }
 </style>
 <script type="application/ld+json">
@@ -76,6 +86,19 @@
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "Zielwertsuche in Google Sheets (wie in Excel, kostenloses Add-on)",
+  "description": "In 48 Sekunden: Goal Seek – Fast & Private installieren, öffnen und mit der Zielwertsuche die Stückzahl für den Break-even finden.",
+  "thumbnailUrl": "https://arbeitstyp.de/apps/goal-seek/assets/tutorial-video-de.jpg",
+  "uploadDate": "2026-10-23",
+  "duration": "PT48S",
+  "embedUrl": "https://www.youtube.com/embed/D5yExK_DiIc",
+  "inLanguage": "de"
+}
+</script>
 </head>
 <body>
 <main>
@@ -98,7 +121,7 @@
     <ol>
       <li><a href="#formel">Formel umstellen</a>: reicht bei einfachen Formeln</li>
       <li><a href="#google-addon">Googles Add-on „Goal Seek“</a>: kostenlos, aber langsam und seit 2023 nicht mehr aktualisiert</li>
-      <li><a href="#fast-private">Goal Seek – Fast &amp; Private</a>: auf Deutsch, schnell und nur mit Zugriff auf die geöffnete Tabelle</li>
+      <li><a href="#fast-private">Goal Seek – Fast &amp; Private</a>: auf Deutsch, schnell und nur mit Zugriff auf die geöffnete Tabelle (<a href="#video">mit Video</a>)</li>
     </ol>
   </div>
 
@@ -159,6 +182,19 @@
     <li><strong>Ehrlich:</strong> Gibt es keine Lösung, sagt es das, zeigt den
       nächsten gefundenen Wert und setzt deinen Ausgangswert zurück.</li>
   </ul>
+  <figure class="video" id="video">
+    <button type="button" class="video-poster" data-yt="D5yExK_DiIc" data-track="gs-video-play-de"
+      data-title="Zielwertsuche in Google Sheets mit Goal Seek – Fast &amp; Private"
+      aria-label="Video abspielen: Zielwertsuche in Google Sheets, 48 Sekunden">
+      <img src="../assets/tutorial-video-de.jpg" width="1280" height="720" loading="lazy"
+        alt="Vorschaubild des Videos: Zielwertsuche in Google Sheets mit der Seitenleiste von Goal Seek – Fast &amp; Private">
+      <span class="play" aria-hidden="true">Video ansehen · 0:48</span>
+    </button>
+    <figcaption>Alle Schritte im Video, 48 Sekunden, ohne Ton. Erst beim Abspielen wird es von YouTube
+      geladen (youtube-nocookie.com), dabei übermittelt dein Browser Daten an Google, siehe
+      <a href="/datenschutz.html#youtube">Datenschutz</a>. Lieber direkt:
+      <a href="https://youtu.be/D5yExK_DiIc" target="_blank" rel="noopener">auf YouTube ansehen</a>.</figcaption>
+  </figure>
   <p>So geht es mit dem Beispiel:</p>
   <ol>
     <li><a data-track="gs-install-zielwertsuche-steps" target="_blank" rel="noopener"
@@ -272,6 +308,30 @@
   var links = document.querySelectorAll('a[data-track]');
   for (var i = 0; i < links.length; i++) {
     links[i].addEventListener('click', function () {
+      try {
+        var u = new URL(GC);
+        u.searchParams.set('p', '/' + this.getAttribute('data-track'));
+        u.searchParams.set('t', this.getAttribute('data-track'));
+        u.searchParams.set('rnd', String(Date.now()));
+        new Image().src = u.toString();
+      } catch (e) {}
+    });
+  }
+})();
+(function () {
+  // two-click video: nothing loads from YouTube until the visitor clicks the poster
+  var GC = 'https://arbeitstyp.goatcounter.com/count';
+  var posters = document.querySelectorAll('button[data-yt]');
+  for (var i = 0; i < posters.length; i++) {
+    posters[i].addEventListener('click', function () {
+      var id = this.getAttribute('data-yt');
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0';
+      f.title = this.getAttribute('data-title') || 'Video';
+      f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      f.allowFullscreen = true;
+      f.referrerPolicy = 'strict-origin-when-cross-origin';
+      this.parentNode.replaceChild(f, this);
       try {
         var u = new URL(GC);
         u.searchParams.set('p', '/' + this.getAttribute('data-track'));

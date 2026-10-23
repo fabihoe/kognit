@@ -32,6 +32,16 @@
   th { background:var(--panel); }
   td:last-child, th:last-child { text-align:right; }
   .cta { background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:8px; padding:16px 18px; margin:26px 0; }
+  .video { margin:16px 0 22px; }
+  .video-poster { display:block; position:relative; width:100%; padding:0; border:1px solid var(--border); border-radius:10px; overflow:hidden; background:#000; cursor:pointer; aspect-ratio:16/9; }
+  .video-poster img { display:block; width:100%; height:100%; object-fit:cover; }
+  .video-poster .play { position:absolute; right:3%; bottom:5%; display:flex; align-items:center; gap:10px; height:44px; padding:0 18px 0 16px; border-radius:999px; background:rgba(28,30,33,.86); color:#fff; font:600 15px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; box-shadow:0 2px 10px rgba(0,0,0,.3); transition:background .15s; }
+  .video-poster .play::before { content:''; border-style:solid; border-width:8px 0 8px 13px; border-color:transparent transparent transparent #fff; }
+  @media (max-width:520px) { .video-poster .play { height:34px; gap:8px; padding:0 13px 0 12px; font-size:13px; } .video-poster .play::before { border-width:6px 0 6px 10px; } }
+  .video-poster:hover .play, .video-poster:focus-visible .play { background:var(--accent); }
+  .video-poster:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .video iframe { display:block; width:100%; aspect-ratio:16/9; border:0; border-radius:10px; background:#000; }
+  .video figcaption { color:var(--muted); font-size:0.88rem; margin-top:8px; line-height:1.5; }
   footer { max-width:720px; margin:0 auto; padding:20px 20px 40px; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); }
 </style>
 <script type="application/ld+json">
@@ -41,7 +51,7 @@
   "headline": "How to Do Goal Seek in Google Sheets (3 Ways, With Examples)",
   "description": "Google Sheets has no built-in Goal Seek menu — three practical ways to backsolve any formula, with worked examples and troubleshooting.",
   "datePublished": "2026-08-12",
-  "dateModified": "2026-10-16",
+  "dateModified": "2026-10-23",
   "author": { "@type": "Person", "name": "Fabian Hönes" },
   "mainEntityOfPage": "https://arbeitstyp.de/apps/goal-seek/how-to-goal-seek-in-google-sheets/"
 }
@@ -74,6 +84,19 @@
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "How to Goal Seek in Google Sheets (like in Excel, free add-on)",
+  "description": "In 48 seconds: install Goal Seek – Fast & Private, open it and use Goal Seek to find the break-even number of units.",
+  "thumbnailUrl": "https://arbeitstyp.de/apps/goal-seek/assets/tutorial-video-en.jpg",
+  "uploadDate": "2026-10-23",
+  "duration": "PT48S",
+  "embedUrl": "https://www.youtube.com/embed/NO7wtrwqGOY",
+  "inLanguage": "en"
+}
+</script>
 </head>
 <body>
 <main>
@@ -94,7 +117,7 @@
     <ol>
       <li><a href="#manual">Solve it manually</a> — fine for simple formulas</li>
       <li><a href="#google-addon">Google's official Goal Seek add-on</a> — free, but slow and aging</li>
-      <li><a href="#fast-private">Goal Seek – Fast &amp; Private</a> — a modern alternative that only touches the sheet you run it in</li>
+      <li><a href="#fast-private">Goal Seek – Fast &amp; Private</a> — a modern alternative that only touches the sheet you run it in (<a href="#video">with video</a>)</li>
     </ol>
   </div>
 
@@ -151,6 +174,19 @@
       FLOOR, lookup buckets) are detected and reported with the best
       achievable value instead of a cryptic error.</li>
   </ul>
+  <figure class="video" id="video">
+    <button type="button" class="video-poster" data-yt="NO7wtrwqGOY" data-track="gs-video-play-en"
+      data-title="How to Goal Seek in Google Sheets with Goal Seek – Fast &amp; Private"
+      aria-label="Play video: How to Goal Seek in Google Sheets, 48 seconds">
+      <img src="../assets/tutorial-video-en.jpg" width="1280" height="720" loading="lazy"
+        alt="Video thumbnail: Goal Seek in Google Sheets with the Goal Seek – Fast &amp; Private sidebar">
+      <span class="play" aria-hidden="true">Watch video · 0:48</span>
+    </button>
+    <figcaption>All steps in a 48-second video, no sound. It only loads from YouTube when you play it
+      (youtube-nocookie.com); your browser then sends data to Google, see the
+      <a href="/datenschutz.html#youtube">privacy policy (in German)</a>. Prefer YouTube?
+      <a href="https://youtu.be/NO7wtrwqGOY" target="_blank" rel="noopener">Watch it there</a>.</figcaption>
+  </figure>
   <p>Using it on the example:</p>
   <ol>
     <li><a data-track="gs-install-tutorial-steps" target="_blank" rel="noopener"
@@ -249,6 +285,30 @@
   var links = document.querySelectorAll('a[data-track]');
   for (var i = 0; i < links.length; i++) {
     links[i].addEventListener('click', function () {
+      try {
+        var u = new URL(GC);
+        u.searchParams.set('p', '/' + this.getAttribute('data-track'));
+        u.searchParams.set('t', this.getAttribute('data-track'));
+        u.searchParams.set('rnd', String(Date.now()));
+        new Image().src = u.toString();
+      } catch (e) {}
+    });
+  }
+})();
+(function () {
+  // two-click video: nothing loads from YouTube until the visitor clicks the poster
+  var GC = 'https://arbeitstyp.goatcounter.com/count';
+  var posters = document.querySelectorAll('button[data-yt]');
+  for (var i = 0; i < posters.length; i++) {
+    posters[i].addEventListener('click', function () {
+      var id = this.getAttribute('data-yt');
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0';
+      f.title = this.getAttribute('data-title') || 'Video';
+      f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      f.allowFullscreen = true;
+      f.referrerPolicy = 'strict-origin-when-cross-origin';
+      this.parentNode.replaceChild(f, this);
       try {
         var u = new URL(GC);
         u.searchParams.set('p', '/' + this.getAttribute('data-track'));
