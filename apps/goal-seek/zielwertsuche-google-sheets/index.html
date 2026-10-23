@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zielwertsuche in Google Sheets: 3 Wege mit Beispielen</title>
+<meta name="description" content="Google Sheets (Google Tabellen) hat keine eingebaute Zielwertsuche wie Excel. Drei Wege im Vergleich: Formel umstellen, Googles Add-on und ein schnelles, privates Add-on, mit Beispielen zu Break-even und Sparplan.">
+<link rel="canonical" href="https://arbeitstyp.de/apps/goal-seek/zielwertsuche-google-sheets/">
+<link rel="alternate" hreflang="de" href="https://arbeitstyp.de/apps/goal-seek/zielwertsuche-google-sheets/">
+<link rel="alternate" hreflang="en" href="https://arbeitstyp.de/apps/goal-seek/how-to-goal-seek-in-google-sheets/">
+<link rel="alternate" hreflang="x-default" href="https://arbeitstyp.de/apps/goal-seek/how-to-goal-seek-in-google-sheets/">
+<style>
+  :root { --text:#1c1e21; --muted:#5c6066; --bg:#ffffff; --panel:#f5f6f7; --border:#e0e2e5; --accent:#188038; }
+  @media (prefers-color-scheme: dark) {
+    :root { --text:#d6d7d9; --muted:#9a9da3; --bg:#1b1c1e; --panel:#242628; --border:#3a3d40; --accent:#5bb974; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); line-height:1.65; }
+  main { max-width:720px; margin:0 auto; padding:48px 20px 64px; }
+  h1 { font-size:1.75rem; margin:0 0 4px; line-height:1.3; }
+  .meta { color:var(--muted); font-size:0.9rem; margin:0 0 28px; }
+  h2 { font-size:1.25rem; margin:34px 0 8px; }
+  h3 { font-size:1.05rem; margin:22px 0 6px; }
+  ul, ol { padding-left:20px; margin:8px 0; }
+  li { margin:6px 0; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  .panel { background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin:18px 0; }
+  code { background:var(--panel); border:1px solid var(--border); border-radius:4px; padding:1px 5px; font-size:0.9em; }
+  table { border-collapse:collapse; margin:12px 0; width:100%; max-width:440px; }
+  th, td { border:1px solid var(--border); padding:6px 10px; text-align:left; font-size:0.95rem; }
+  th { background:var(--panel); }
+  td:last-child, th:last-child { text-align:right; }
+  .cta { background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:8px; padding:16px 18px; margin:26px 0; }
+  footer { max-width:720px; margin:0 auto; padding:20px 20px 40px; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Zielwertsuche in Google Sheets: 3 Wege mit Beispielen",
+  "description": "Google Sheets hat keine eingebaute Zielwertsuche. Drei praktische Wege, eine Formel rückwärts zu lösen, mit Beispielen und Hilfe bei Problemen.",
+  "inLanguage": "de",
+  "datePublished": "2026-10-23",
+  "dateModified": "2026-10-23",
+  "author": { "@type": "Person", "name": "Fabian Hönes" },
+  "mainEntityOfPage": "https://arbeitstyp.de/apps/goal-seek/zielwertsuche-google-sheets/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "de",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Gibt es in Google Sheets eine Zielwertsuche?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Nicht eingebaut. Excel hat die Zielwertsuche unter Daten, Was-wäre-wenn-Analyse. In Google Sheets brauchst du ein Add-on aus dem Google Workspace Marketplace, oder du stellst die Formel von Hand um." }
+    },
+    {
+      "@type": "Question",
+      "name": "Ist die Zielwertsuche in Google Sheets kostenlos?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ja. Googles eigenes Add-on Goal Seek ist kostenlos, und Goal Seek – Fast & Private ist ebenfalls kostenlos und ohne Tageslimit." }
+    },
+    {
+      "@type": "Question",
+      "name": "Funktioniert die Zielwertsuche mit deutschen Zahlen wie 1.234,5?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Goal Seek – Fast & Private liest Zahlen im Format der Tabelle, in einer deutschen Tabelle also mit Komma als Dezimalzeichen. Die Oberfläche gibt es auf Deutsch und Englisch." }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann die Zielwertsuche mehrere Zellen gleichzeitig ändern?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Nein. Die Zielwertsuche verändert genau eine Eingabezelle. Für mehrere Eingaben mit Nebenbedingungen brauchst du einen Optimierer (Solver), das ist eine andere Art Werkzeug." }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <h1>Zielwertsuche in Google Sheets</h1>
+  <p class="meta">Stand Oktober 2026 · 7 Minuten Lesezeit ·
+    <a href="../index.html" lang="en">Goal Seek – Fast &amp; Private</a> ·
+    <a href="../how-to-goal-seek-in-google-sheets/" lang="en" hreflang="en">English version</a></p>
+
+  <p><strong>Die Zielwertsuche rechnet rückwärts:</strong> Du weißt, welches
+  Ergebnis eine Formel liefern soll, und suchst den Eingabewert dazu. Bei
+  welchem Preis ist der Gewinn genau null? Welche monatliche Rendite braucht
+  dein Sparplan, damit am Ende 40.000&nbsp;€ herauskommen? Welche Note brauchst
+  du in der letzten Prüfung?</p>
+
+  <div class="panel">
+    <strong>Kurz gesagt:</strong> Google Sheets (auf Deutsch Google Tabellen)
+    hat <em>keine eingebaute</em> Zielwertsuche. In Excel findest du sie unter
+    <em>Daten › Was-wäre-wenn-Analyse › Zielwertsuche</em>. In Google Sheets
+    hast du drei Möglichkeiten:
+    <ol>
+      <li><a href="#formel">Formel umstellen</a>: reicht bei einfachen Formeln</li>
+      <li><a href="#google-addon">Googles Add-on „Goal Seek“</a>: kostenlos, aber langsam und seit 2023 nicht mehr aktualisiert</li>
+      <li><a href="#fast-private">Goal Seek – Fast &amp; Private</a>: auf Deutsch, schnell und nur mit Zugriff auf die geöffnete Tabelle</li>
+    </ol>
+  </div>
+
+  <h2 id="beispiel">Das Beispiel: ein Break-even-Preis</h2>
+  <p>Du verkaufst ein Produkt und willst wissen, ab welchem Preis du kein Geld
+  mehr verlierst:</p>
+  <table>
+    <tr><th></th><th>A</th><th>B</th></tr>
+    <tr><td><strong>1</strong></td><td>Absatz (Stück)</td><td>400</td></tr>
+    <tr><td><strong>2</strong></td><td>Preis pro Stück</td><td>49,00&nbsp;€</td></tr>
+    <tr><td><strong>3</strong></td><td>Variable Kosten pro Stück</td><td>31,00&nbsp;€</td></tr>
+    <tr><td><strong>4</strong></td><td>Fixkosten</td><td>9.000,00&nbsp;€</td></tr>
+    <tr><td><strong>5</strong></td><td>Gewinn</td><td>=B1*(B2-B3)-B4</td></tr>
+  </table>
+  <p>Bei einem Preis von 49,00&nbsp;€ zeigt der Gewinn <strong>−1.800,00&nbsp;€</strong>.
+  Das Ziel: <strong>B5 soll 0 werden, indem B2 verändert wird.</strong> Die
+  Antwort ist 53,50&nbsp;€, und genau die soll Google Sheets finden.</p>
+
+  <h2 id="formel">Weg 1: Formel umstellen</h2>
+  <p>Lässt sich die Formel nach dem Eingabewert auflösen, brauchst du kein
+  Werkzeug. Der Break-even-Preis ist einfache Algebra:</p>
+  <p><code>=B3+B4/B1</code> ergibt 31 + 9.000 / 400 = <strong>53,50</strong></p>
+  <p>Das klappt nicht mehr, wenn die Formelkette zu verschachtelt ist:
+  Zinseszins, Steuern und Rabatte übereinander, WENN-Logik, Nachschlagen in
+  Tabellen oder Werte aus mehreren Blättern. Dann probierst du entweder von
+  Hand Werte aus, oder du lässt ein Add-on suchen.</p>
+
+  <h2 id="google-addon">Weg 2: Googles Add-on „Goal Seek“</h2>
+  <ol>
+    <li><em>Erweiterungen › Add-ons › Add-ons abrufen</em>, nach „Goal Seek“
+      suchen und das Add-on von Google installieren.</li>
+    <li>Über <em>Erweiterungen › Goal Seek</em> öffnen, dann Zielzelle,
+      Zielwert und die zu ändernde Zelle eintragen.</li>
+    <li>Die Suche starten.</li>
+  </ol>
+  <p>Es ist kostenlos und kommt von Google. Für ein Beispiel wie oben kommt es
+  zum Ziel. Ein paar Dinge solltest du wissen: Der Eintrag im Marketplace wurde
+  zuletzt im Mai 2023 aktualisiert, das Add-on will Zugriff auf <em>alle</em>
+  deine Tabellen, und es hat im Schnitt 2,8 von 5 Sternen. Rezensionen
+  berichten von langen Laufzeiten und von Fehlern bei Formeln mit
+  SUMMEWENNS. Wenn es bei dir gut läuft, bleib dabei. Wenn es dir zu langsam
+  ist oder an deinem Modell scheitert, ist der dritte Weg genau dafür gebaut.</p>
+
+  <h2 id="fast-private">Weg 3: Goal Seek – Fast &amp; Private</h2>
+  <p><a href="../index.html" lang="en">Goal Seek – Fast &amp; Private</a> ist
+  unser Add-on für dieselbe Aufgabe:</p>
+  <ul>
+    <li><strong>Auf Deutsch:</strong> Die Oberfläche richtet sich nach der
+      Sprache deines Google-Kontos, Zahlen liest es im Format der Tabelle, in
+      einer deutschen Tabelle also mit Komma (1.234,5).</li>
+    <li><strong>Schnell:</strong> Es braucht meist nur wenige Neuberechnungen
+      und ist bei einfachen Tabellen nach Sekunden fertig. Große Tabellen, die
+      selbst lange rechnen, brauchen länger. Du siehst den Fortschritt und
+      kannst jederzeit abbrechen.</li>
+    <li><strong>Privat:</strong> Es hat nur Zugriff auf die Tabelle, in der du
+      es öffnest, nicht auf deine anderen Dateien. Es sendet keine Daten an
+      fremde Server.</li>
+    <li><strong>Ehrlich:</strong> Gibt es keine Lösung, sagt es das, zeigt den
+      nächsten gefundenen Wert und setzt deinen Ausgangswert zurück.</li>
+  </ul>
+  <p>So geht es mit dem Beispiel:</p>
+  <ol>
+    <li><a data-track="gs-install-zielwertsuche-steps" target="_blank" rel="noopener"
+      href="https://workspace.google.com/marketplace/app/goal_seek_%E2%80%93_fast_private/640557799458">Goal
+      Seek – Fast &amp; Private installieren</a>: kostenlos im Google Workspace
+      Marketplace, dauert unter einer Minute.</li>
+    <li>In der Tabelle <em>Erweiterungen › Goal Seek – Fast &amp; Private ›
+      Goal Seek öffnen</em> wählen. Rechts erscheint eine Seitenleiste.</li>
+    <li><em>Zielzelle:</em> B5, <em>Zielwert:</em> 0, <em>Veränderbare
+      Zelle:</em> B2. Du musst die Zellen nicht tippen: Klick auf das
+      Raster-Symbol neben dem Feld und dann auf die Zelle in der Tabelle. Für
+      die veränderbare Zelle schlägt die Seitenleiste außerdem die Eingabezellen
+      deiner Formel vor, hier B1 bis B4 mit ihren Beschriftungen.</li>
+    <li><em>Ziel suchen</em> klicken. Die Ergebniskarte zeigt den neuen Wert
+      neben dem alten, unter <em>Details</em> stehen Abweichung und Dauer.</li>
+    <li><em>Übernehmen</em> oder mit <em>Rückgängig</em> den Ausgangswert
+      zurückholen. Der ursprüngliche Inhalt der Zelle wird vor der ersten
+      Änderung gesichert, ein abgebrochener oder gescheiterter Lauf verändert
+      deine Tabelle also nicht.</li>
+  </ol>
+
+  <div class="cta">
+    <strong>Ausprobieren:</strong> <a data-track="gs-install-zielwertsuche-cta" target="_blank" rel="noopener"
+    href="https://workspace.google.com/marketplace/app/goal_seek_%E2%80%93_fast_private/640557799458">Goal
+    Seek – Fast &amp; Private im Google Workspace Marketplace installieren</a>.
+    Kostenlos, ohne Tageslimit, auf Deutsch und Englisch.
+    <a href="../index.html" lang="en">Mehr über das Add-on (Englisch).</a>
+  </div>
+
+  <h2 id="sparplan">Zweites Beispiel: Welche Rendite braucht dein Sparplan?</h2>
+  <p>Manche Fragen lassen sich gar nicht nach dem Eingabewert auflösen.
+  Angenommen, du sparst 10 Jahre lang jeden Monat 250&nbsp;€ und willst am Ende
+  40.000&nbsp;€ haben:</p>
+  <table>
+    <tr><th></th><th>A</th><th>B</th></tr>
+    <tr><td><strong>1</strong></td><td>Monatliche Sparrate</td><td>250,00&nbsp;€</td></tr>
+    <tr><td><strong>2</strong></td><td>Monate</td><td>120</td></tr>
+    <tr><td><strong>3</strong></td><td>Monatliche Rendite</td><td>0,30&nbsp;%</td></tr>
+    <tr><td><strong>4</strong></td><td>Endwert</td><td>=B1*((1+B3)^B2-1)/B3</td></tr>
+  </table>
+  <p>Zielwertsuche: <strong>B4 soll 40.000 werden, indem B3 verändert
+  wird.</strong> Das Ergebnis liegt bei etwa <strong>0,46&nbsp;% pro Monat</strong>,
+  also rund 5,7&nbsp;% pro Jahr. Diese Zahl bekommst du mit Algebra nicht
+  sauber heraus, eine Zielwertsuche findet sie in ein paar Schritten.</p>
+
+  <h2 id="probleme">Wenn die Zielwertsuche nicht klappt</h2>
+  <ul>
+    <li><strong>„Keine Lösung gefunden“:</strong> Bei keinem getesteten Wert hat
+      die Formel den Zielwert erreicht. Oft ist das Ziel schlicht unerreichbar
+      (ein Quadrat wird nie negativ, ein Anteil nie größer als 100&nbsp;%). Manchmal
+      hilft ein anderer Startwert oder eine Unter- und Obergrenze unter
+      <em>Erweiterte Optionen</em>.</li>
+    <li><strong>Die Formel springt in Stufen:</strong> Rundungen, Staffeln oder
+      Nachschlagetabellen mit SUMMEWENNS, KÜRZEN oder SVERWEIS. Dann trifft kein
+      Eingabewert das Ziel genau. Goal Seek – Fast &amp; Private meldet das und
+      zeigt den nächsten erreichbaren Wert.</li>
+    <li><strong>Die Zielzelle zeigt einen Fehler</strong> (#DIV/0!, #NV) bei
+      manchen Eingaben: Die Suche umgeht solche Bereiche. Zeigt die Zelle bei
+      <em>jeder</em> Eingabe einen Fehler, korrigiere zuerst die Formel.</li>
+    <li><strong>Es ändert sich nichts:</strong> Prüfe, ob die Zielformel
+      wirklich von der veränderbaren Zelle abhängt. Meist steckt irgendwo
+      dazwischen eine fest eingetragene Zahl statt eines Zellbezugs.</li>
+    <li><strong>In der Zielzelle steht ein Wert, keine Formel:</strong> Die
+      Zielwertsuche braucht eine Formel, die neu rechnet. Wähle die Zelle mit
+      der Formel.</li>
+    <li><strong>Die Seitenleiste meldet eine fehlende Berechtigung:</strong>
+      Öffne Goal Seek erneut über das Menü Erweiterungen und erlaube alle
+      Berechtigungen, nach denen Google fragt. Bist du in mehreren
+      Google-Konten angemeldet, öffne die Tabelle in einem Fenster, in dem nur
+      dieses Konto angemeldet ist.</li>
+  </ul>
+
+  <h2 id="faq">Häufige Fragen</h2>
+  <h3>Gibt es in Google Sheets eine Zielwertsuche?</h3>
+  <p>Nicht eingebaut. Excel hat sie unter <em>Daten › Was-wäre-wenn-Analyse ›
+  Zielwertsuche</em>, in Google Sheets brauchst du ein Add-on oder stellst die
+  Formel von Hand um.</p>
+  <h3>Ist die Zielwertsuche in Google Sheets kostenlos?</h3>
+  <p>Ja. Googles Add-on ist kostenlos, Goal Seek – Fast &amp; Private ebenfalls,
+  ohne Tageslimit.</p>
+  <h3>Funktioniert das mit deutschen Zahlen wie 1.234,5?</h3>
+  <p>Ja. Goal Seek – Fast &amp; Private liest Zahlen im Format der Tabelle. In
+  einer deutschen Tabelle tippst du also wie gewohnt mit Komma.</p>
+  <h3>Kann die Zielwertsuche mehrere Zellen gleichzeitig ändern?</h3>
+  <p>Nein. Die Zielwertsuche verändert genau eine Eingabezelle. Für mehrere
+  Eingaben mit Nebenbedingungen brauchst du einen Optimierer (Solver), das ist
+  eine andere Art Werkzeug.</p>
+  <h3>Sind meine Daten bei einem Add-on sicher?</h3>
+  <p>Schau bei der Installation auf die Berechtigungen. Googles eigenes Add-on
+  fragt nach Zugriff auf alle deine Tabellen. Goal Seek – Fast &amp; Private
+  nutzt bewusst die eingeschränkte Berechtigung
+  <code>spreadsheets.currentonly</code>, die nur für die Datei gilt, in der du
+  es öffnest, und sendet nichts an fremde Server. Details stehen in der
+  <a href="../privacy.html" lang="en">Datenschutzerklärung (Englisch)</a>.</p>
+
+  <p class="meta" style="margin-top:36px">
+    <a href="../index.html">← Goal Seek – Fast &amp; Private für Google Sheets</a>
+  </p>
+</main>
+<footer>
+  Geschrieben von Fabian Hönes · <a href="https://arbeitstyp.de/impressum.html">Impressum</a> ·
+  <a href="../support/" lang="en">Support</a> ·
+  Google Sheets™, Google Tabellen, Google Workspace Marketplace™ und Excel sind
+  Marken ihrer jeweiligen Inhaber. Diese Seite steht in keiner Verbindung zu
+  Google oder Microsoft und wird von ihnen nicht unterstützt.
+</footer>
+<script>
+'use strict';
+(function () {
+  var GC = 'https://arbeitstyp.goatcounter.com/count';
+  var links = document.querySelectorAll('a[data-track]');
+  for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('click', function () {
+      try {
+        var u = new URL(GC);
+        u.searchParams.set('p', '/' + this.getAttribute('data-track'));
+        u.searchParams.set('t', this.getAttribute('data-track'));
+        u.searchParams.set('rnd', String(Date.now()));
+        new Image().src = u.toString();
+      } catch (e) {}
+    });
+  }
+})();
+</script>
+</body>
+</html>
